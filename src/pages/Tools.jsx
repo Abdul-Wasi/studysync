@@ -1,13 +1,10 @@
-import React from "react";
+const Tools = () => {
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+      <h1 className="text-3xl font-bold text-blue-600">Study Tools</h1>
+      <p className="text-gray-700 mt-2">Coming soon...</p>
+    </div>
+  );
+};
 
-function Tools() {
-    return (
-      <div>
-        <h2>Tools</h2>
-        <p>Here are all the tools available for students.</p>
-      </div>
-    );
-  }
-  
-  export default Tools;
-  
+export default Tools;
