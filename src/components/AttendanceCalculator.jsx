@@ -1,51 +1,68 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { ProgressBar } from "react-bootstrap"; // If you're using bootstrap for styling
 
 const AttendanceCalculator = () => {
-  const [attended, setAttended] = useState("");
-  const [total, setTotal] = useState("");
-  const [percentage, setPercentage] = useState(null);
+  const [classesHeld, setClassesHeld] = useState("");
+  const [classesAttended, setClassesAttended] = useState("");
+  const [requiredAttendance, setRequiredAttendance] = useState(75);
+  const [attendancePercentage, setAttendancePercentage] = useState(null);
+  const [prediction, setPrediction] = useState("");
 
+  // Function to calculate attendance percentage
   const calculateAttendance = () => {
-    if (total > 0) {
-      const percent = ((attended / total) * 100).toFixed(2);
-      setPercentage(percent);
+    if (classesHeld > 0 && classesAttended >= 0) {
+      const percentage = (classesAttended / classesHeld) * 100;
+      setAttendancePercentage(percentage);
+      
+      // Predict if the student will meet the attendance requirement
+      if (percentage >= requiredAttendance) {
+        setPrediction("You are on track!");
+      } else {
+        setPrediction("You need to attend more classes to meet the requirement.");
+      }
     } else {
-      setPercentage(null);
+      setPrediction("Please enter valid numbers.");
     }
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
-      <h2 className="text-xl font-bold mb-4 text-center">Attendance Calculator</h2>
+    <div className="attendance-calculator">
+      <h2>Attendance Calculator</h2>
+      <div>
+        <label>Classes Held: </label>
+        <input
+          type="number"
+          value={classesHeld}
+          onChange={(e) => setClassesHeld(e.target.value)}
+        />
+      </div>
+      <div>
+        <label>Classes Attended: </label>
+        <input
+          type="number"
+          value={classesAttended}
+          onChange={(e) => setClassesAttended(e.target.value)}
+        />
+      </div>
+      <div>
+        <label>Required Attendance: </label>
+        <input
+          type="number"
+          value={requiredAttendance}
+          onChange={(e) => setRequiredAttendance(e.target.value)}
+        />
+        <span>%</span>
+      </div>
+      <button onClick={calculateAttendance}>Calculate</button>
       
-      <input
-        type="number"
-        placeholder="Attended Classes"
-        value={attended}
-        onChange={(e) => setAttended(e.target.value)}
-        className="border p-2 rounded w-full mb-2 text-black border-gray-300"
-      />
-
-      <input
-        type="number"
-        placeholder="Total Classes"
-        value={total}
-        onChange={(e) => setTotal(e.target.value)}
-        className="border p-2 rounded w-full mb-2 text-black border-gray-300"
-      />
-
-      <button
-        onClick={calculateAttendance}
-        className="w-full bg-blue-500 text-white p-2 rounded mt-2 hover:bg-blue-600 transition"
-      >
-        Calculate
-      </button>
-
-      {percentage !== null && (
-        <p className="mt-4 text-lg font-semibold text-black bg-gray-200 p-2 rounded text-center">
-          Attendance: {percentage}%
-        </p>
+      {attendancePercentage !== null && (
+        <div>
+          <h3>Attendance Percentage: {attendancePercentage.toFixed(2)}%</h3>
+          <ProgressBar now={attendancePercentage} max={100} label={`${attendancePercentage.toFixed(2)}%`} />
+        </div>
       )}
+      
+      <h4>{prediction}</h4>
     </div>
   );
 };
