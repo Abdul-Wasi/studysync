@@ -100,7 +100,6 @@ const AttendanceCalculator = () => {
         </div>
       )}
 
-      {/* Prediction Section */}
       {attendancePercentage !== null && (
         <div className="mt-4">
           <h3>Predict Required Attendance</h3>

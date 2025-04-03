@@ -1,4 +1,8 @@
 @import "tailwindcss";
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
 
 .container {
   text-align: center;
@@ -11,4 +15,99 @@ header {
   color: white;
   padding: 20px;
   border-radius: 10px;
+}
+
+/* Global Styles */
+body {
+  background-color: #F4F7FA;
+  color: #333333;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 20px;
+}
+
+/* Form and Button Styles */
+form {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form .form-group {
+  margin-bottom: 20px;
+}
+
+form label {
+  font-weight: bold;
+  color: #555555;
+}
+
+form input {
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  transition: all 0.3s ease-in-out;
+}
+
+form input:focus {
+  border-color: #1E90FF;
+  box-shadow: 0 0 5px rgba(30, 144, 255, 0.3);
+}
+
+button {
+  background-color: #32CD32;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #28a745;
+}
+
+/* Alert Styles */
+.alert {
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Progress Bar */
+.progress-bar {
+  border-radius: 8px;
+}
+
+.progress-bar-success {
+  background-color: #32CD32 !important;
+}
+
+.progress-bar-warning {
+  background-color: #FF9800 !important;
+}
+
+.progress-bar-danger {
+  background-color: #F44336 !important;
+}
+
+h2, h3 {
+  font-weight: bold;
+  color: #333;
+}
+
+/* General Layout Enhancements */
+.attendance-calculator {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
 }
