@@ -1,0 +1,40 @@
+/* Home Page Styling */
+.home {
+    text-align: center;
+    padding: 50px;
+  }
+  
+  .hero {
+    background-color: #1E90FF;
+    color: white;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .hero h1 {
+    font-size: 32px;
+    font-weight: bold;
+  }
+  
+  .hero p {
+    font-size: 18px;
+    margin-top: 10px;
+  }
+  
+  .hero-btn {
+    background-color: #32CD32;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 20px;
+    transition: 0.3s;
+  }
+  
+  .hero-btn:hover {
+    background-color: #28a745;
+  }
+  

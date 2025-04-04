@@ -1,12 +1,17 @@
-import React from 'react';
+import React from "react";
+import "../styles/Home.css";
+import { Link } from "react-router-dom";
 
-function Home() {
+const Home = () => {
   return (
-    <div>
-        <h2>Home</h2>
-        <p>Welcome to StudySync! This is your student productivity hub.</p>
+    <div className="home">
+      <section className="hero">
+        <h1>Welcome to UniTools</h1>
+        <p>Your one-stop solution for university productivity tools.</p>
+        <Link to="/tools" className="hero-btn">Explore Tools</Link>
+      </section>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

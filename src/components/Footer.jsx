@@ -1,11 +1,17 @@
-import "./Footer.css";
+import React from "react";
+import "../styles/Footer.css";
 
-function Footer() {
+const Footer = () => {
   return (
     <footer className="footer">
-      <p>© 2024 StudySync. All rights reserved.</p>
+      <p>© 2024 UniTools | Made for students, by students.</p>
+      <div className="footer-links">
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
     </footer>
   );
-}
+};
 
 export default Footer;

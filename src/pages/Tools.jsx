@@ -1,11 +1,16 @@
-import AttendanceCalculator from "../components/AttendanceCalculator";
+import React from "react";
+import "../styles/Tools.css"
+import { Link } from "react-router-dom";
 
 const Tools = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
-      <h1 className="text-3xl font-bold text-blue-600 mb-6">Study Tools</h1>
-      <div className="flex flex-wrap gap-6">
-        <AttendanceCalculator />
+    <div className="tools">
+      <h2>Explore Our Tools</h2>
+      <div className="tools-grid">
+        <Link to="/tools/attendance" className="tool-card">
+          <h3>Attendance Calculator</h3>
+          <p>Track and calculate your attendance percentage.</p>
+        </Link>
       </div>
     </div>
   );
