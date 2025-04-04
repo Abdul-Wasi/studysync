@@ -1,14 +1,24 @@
 import React from "react";
-import "../styles/Footer.css";
+import { Link } from "react-router-dom";
+import "../styles/Footer.css"; // Updated path
 
 const Footer = () => {
   return (
     <footer className="footer">
-      <p>© 2024 UniTools | Made for students, by students.</p>
-      <div className="footer-links">
-        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
-        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <div className="footer-container">
+        <div className="footer-logo">
+          <h2>UniTools</h2>
+          <p>Essential tools for students & scholars</p>
+        </div>
+        <div className="footer-links">
+          <Link to="/">Home</Link>
+          <Link to="/tools">Tools</Link>
+          <Link to="/about">About</Link>
+          <Link to="/contact">Contact</Link>
+        </div>
+        <div className="footer-bottom">
+          <p>&copy; {new Date().getFullYear()} UniTools. All rights reserved.</p>
+        </div>
       </div>
     </footer>
   );

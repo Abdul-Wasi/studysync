@@ -1,36 +1,50 @@
-/* Navbar.css */
 .navbar {
-  background-color: #005C68;  /* Deep Teal */
-  padding: 15px 20px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #005C68; /* Deep Teal */
+  padding: 15px 0;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-radius: 8px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-.navbar-brand {
-  color: #E5FCFF; /* Pale Aqua */
-  font-size: 22px;
+.logo {
+  font-size: 24px;
   font-weight: bold;
-  font-family: 'Poppins', sans-serif;
+  color: white;
   text-decoration: none;
 }
 
-.navbar-links {
+.nav-links {
+  list-style: none;
   display: flex;
-  gap: 15px;
+  gap: 20px;
 }
 
-.navbar-links a {
-  color: #F8F9FA; /* Soft White */
+.nav-links li {
+  display: inline-block;
+}
+
+.nav-links a {
   text-decoration: none;
-  font-size: 16px;
+  color: white;
+  font-size: 18px;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: 0.3s ease;
 }
 
-.navbar-links a:hover {
+.nav-links a:hover {
   color: #E5FCFF; /* Pale Aqua */
-  text-shadow: 0px 0px 8px rgba(229, 252, 255, 0.8);
+}
+
+/* Responsive Navbar */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
 }
