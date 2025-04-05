@@ -1,43 +1,48 @@
 @import "tailwindcss";
+
+/* Reset + Global */
 * {
   font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
 }
 
-
-.container {
-  text-align: center;
-  padding: 50px;
-  font-family: Arial, sans-serif;
-}
-
-header {
-  background-color: #007bff;
-  color: white;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-/* Global Styles */
-body {
-  background-color: #F4F7FA;
-  color: #333333;
-  font-family: 'Poppins', sans-serif;
+body, html, #root {
   margin: 0;
   padding: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #FFEBD0; /* Peach Cream */
+  color: #222;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 50px auto;
-  padding: 20px;
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
 }
 
-/* Form and Button Styles */
+.main-container {
+  flex: 1;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* Headers */
+h1, h2, h3, h4 {
+  font-weight: 600;
+  color: #278783; /* Deep Aqua */
+}
+
+/* Form & Input Styling */
 form {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+  margin-top: 20px;
 }
 
 form .form-group {
@@ -45,45 +50,46 @@ form .form-group {
 }
 
 form label {
-  font-weight: bold;
-  color: #555555;
+  font-weight: 500;
+  color: #444;
 }
 
 form input {
   border-radius: 8px;
   padding: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
   transition: all 0.3s ease-in-out;
 }
 
 form input:focus {
-  border-color: #1E90FF;
-  box-shadow: 0 0 5px rgba(30, 144, 255, 0.3);
+  border-color: #278783;
+  box-shadow: 0 0 6px rgba(39, 135, 131, 0.3);
 }
 
+/* Buttons */
 button {
-  background-color: #32CD32;
+  background-color: #278783;
   border: none;
-  padding: 10px 20px;
+  padding: 10px 24px;
   border-radius: 8px;
   color: white;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #28a745;
+  background-color: #1f6e6a;
 }
 
-/* Alert Styles */
+/* Alerts */
 .alert {
-  border-radius: 8px;
-  font-weight: bold;
+  border-radius: 10px;
+  font-weight: 500;
   text-align: center;
 }
 
-/* Progress Bar */
+/* Progress Bars */
 .progress-bar {
   border-radius: 8px;
 }
@@ -100,12 +106,7 @@ button:hover {
   background-color: #F44336 !important;
 }
 
-h2, h3 {
-  font-weight: bold;
-  color: #333;
-}
-
-/* General Layout Enhancements */
+/* Component Specific */
 .attendance-calculator {
   max-width: 600px;
   margin: 0 auto;

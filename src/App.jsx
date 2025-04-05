@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import AttendanceCalculator from "./components/AttendanceCalculator";
@@ -7,14 +7,13 @@ import Tools from "./pages/Tools";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import "./App.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
     <>
       <Navbar />
-      <div className="container">
+      <div className="main-container">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="tools" element={<Tools />} />
