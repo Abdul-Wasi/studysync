@@ -1,27 +1,45 @@
+// src/pages/Tools.jsx
+
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/Tools.css";
 
-const toolsList = [
-  { name: "Attendance Calculator", path: "/tools/attendance", icon: "fa-calendar-check" },
-  { name: "SGPA Calculator", path: "/tools/sgpa", icon: "fa-graduation-cap" },
-  { name: "Study Planner", path: "/tools/study-planner", icon: "fa-book-open" },
-  { name: "Discussion Forum", path: "/tools/forum", icon: "fa-comments" },
-];
-
 const Tools = () => {
   return (
     <div className="tools-page">
-      <h2>Explore Our Tools</h2>
-      <p>Select a tool to simplify your academic journey.</p>
+      <h1>Explore Our Tools</h1>
+      <p className="subtitle">Everything you need to stay on top of your academics.</p>
 
       <div className="tools-grid">
-        {toolsList.map((tool, index) => (
-          <Link to={tool.path} key={index} className="tool-card">
-            <i className={`fas ${tool.icon}`}></i>
-            <h3>{tool.name}</h3>
-          </Link>
-        ))}
+        <Link to="/tools/attendance" className="tool-card">
+          <i className="fas fa-user-check tool-icon"></i>
+          <h3>Attendance Calculator</h3>
+          <p>Calculate your current attendance and how many classes to attend or skip.</p>
+        </Link>
+
+        <div className="tool-card coming-soon">
+          <i className="fas fa-graduation-cap tool-icon"></i>
+          <h3>SGPA Calculator</h3>
+          <p>Coming Soon: Easily compute your SGPA from your semester grades.</p>
+        </div>
+
+        <div className="tool-card coming-soon">
+          <i className="fas fa-chart-pie tool-icon"></i>
+          <h3>Attendance Visualizer</h3>
+          <p>Coming Soon: Get graphs showing your attendance patterns over time.</p>
+        </div>
+
+        <div className="tool-card coming-soon">
+          <i className="fas fa-calendar-alt tool-icon"></i>
+          <h3>Study Planner</h3>
+          <p>Coming Soon: Plan your study schedule and stay organized daily.</p>
+        </div>
+
+        <div className="tool-card coming-soon">
+          <i className="fas fa-comments tool-icon"></i>
+          <h3>Discussion Forum</h3>
+          <p>Coming Soon: Ask questions, share answers, and engage with peers.</p>
+        </div>
       </div>
     </div>
   );

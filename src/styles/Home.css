@@ -1,89 +1,98 @@
 .home {
-  text-align: center;
-  background: #E5FCFF;
-  padding: 50px 20px;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  background-color: #fefefe;
 }
 
 /* Hero Section */
 .hero {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: 50px 0;
-}
-
-.hero-text {
-  max-width: 500px;
-  text-align: left;
+  padding: 80px 20px;
+  background-color: #FFEBD0;
+  text-align: center;
 }
 
 .hero-text h1 {
-  color: #005C68;
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-}
-
-.hero-text p {
-  color: #333;
-  font-size: 1.2rem;
+  font-size: 3rem;
+  color: #278783;
   margin-bottom: 20px;
 }
 
+.hero-text p {
+  font-size: 1.2rem;
+  color: #444;
+  margin-bottom: 30px;
+}
+
 .cta-button {
-  display: inline-block;
-  background: #005C68;
-  color: #fff;
-  padding: 12px 24px;
+  background-color: #278783;
+  color: white;
+  padding: 12px 28px;
+  border: none;
   border-radius: 8px;
+  font-weight: 600;
   text-decoration: none;
-  font-size: 1rem;
-  font-weight: bold;
-  transition: 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 .cta-button:hover {
-  background: #004956;
+  background-color: #1f6d6e;
 }
 
 .hero-image {
-  max-width: 400px;
-  margin-left: 30px;
+  max-width: 500px;
+  width: 100%;
+  margin-top: 40px;
+  border-radius: 16px;
 }
 
 /* Features Section */
 .features {
-  margin-top: 60px;
+  padding: 60px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.features h2 {
+  font-size: 2.5rem;
+  color: #278783;
+  margin-bottom: 40px;
 }
 
 .feature-list {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 30px;
-  flex-wrap: wrap;
 }
 
 .feature-card {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  width: 250px;
-  text-align: center;
+  background-color: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  max-width: 300px;
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
 }
 
 .feature-card i {
-  font-size: 40px;
-  color: #005C68;
-  margin-bottom: 10px;
+  font-size: 2rem;
+  color: #278783;
+  margin-bottom: 15px;
 }
 
 .feature-card h3 {
-  color: #005C68;
-  font-size: 1.4rem;
+  color: #222;
+  margin-bottom: 10px;
 }
 
 .feature-card p {
-  color: #444;
+  color: #555;
   font-size: 1rem;
 }
