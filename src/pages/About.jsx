@@ -7,9 +7,10 @@ const About = () => {
   return (
     <div className="about-page">
       <div className="about-container">
-        <h1>About UniTools</h1>
+        <h1>About StudySync</h1>
+
         <p className="intro">
-          UniTools is your one-stop platform designed to empower students with intelligent academic tools. Whether it’s managing attendance, calculating SGPA, or planning studies — we’ve got your back.
+          StudySync is your one-stop platform designed to empower students with intelligent academic tools. Whether it’s managing attendance, calculating SGPA, or planning studies — we’ve got your back.
         </p>
 
         <div className="mission-section">
@@ -22,7 +23,7 @@ const About = () => {
         <div className="team-section">
           <h2>🤝 Meet the Team</h2>
           <p>
-            UniTools is proudly built by passionate students who understand the challenges of university life and strive to solve them using technology.
+            StudySync is proudly built by passionate students who understand the challenges of university life and strive to solve them using technology.
           </p>
         </div>
 
@@ -31,6 +32,10 @@ const About = () => {
           <p>
             To evolve into a community-driven educational toolkit hub and become every student's trusted digital companion.
           </p>
+        </div>
+
+        <div className="footer-note">
+          <p>Made with ❤️ by students, for students</p>
         </div>
       </div>
     </div>

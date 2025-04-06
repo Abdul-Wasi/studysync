@@ -1,0 +1,97 @@
+/* src/styles/AttendanceCalculator.css */
+
+.attendance-page {
+    padding: 60px 20px;
+    background-color: #fef9f4;
+    text-align: center;
+    min-height: 100vh;
+  }
+  
+  .attendance-page h1 {
+    color: #278783;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .subtitle {
+    color: #555;
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+  }
+  
+  .form-section,
+  .target-section {
+    margin: 30px auto;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+  button {
+    padding: 10px 16px;
+    background-color: #278783;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: #1f6b6a;
+  }
+  
+  .result-box {
+    margin-top: 30px;
+  }
+  
+  .progress-bar-wrapper {
+    margin: 15px auto;
+    height: 20px;
+    background-color: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 80%;
+    max-width: 400px;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.5s ease;
+  }
+  
+  .progress-bar.green {
+    background-color: #4caf50;
+  }
+  
+  .progress-bar.yellow {
+    background-color: #ffc107;
+  }
+  
+  .progress-bar.red {
+    background-color: #f44336;
+  }
+  
+  .error-box,
+  .info-box {
+    margin-top: 20px;
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ffeeba;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  

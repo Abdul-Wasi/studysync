@@ -14,7 +14,9 @@ const Tools = () => {
         <Link to="/tools/attendance" className="tool-card">
           <i className="fas fa-user-check tool-icon"></i>
           <h3>Attendance Calculator</h3>
-          <p>Calculate your current attendance and how many classes to attend or skip.</p>
+          <p>
+            Calculate your current attendance and see how many classes you can skip or need to attend.
+          </p>
         </Link>
 
         <div className="tool-card coming-soon">

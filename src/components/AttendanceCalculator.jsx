@@ -1,5 +1,7 @@
+// src/components/AttendanceCalculator.jsx
+
 import React, { useState } from "react";
-import { ProgressBar, Alert, Form, Button } from "react-bootstrap";
+import "../styles/AttendanceCalculator.css";
 
 const AttendanceCalculator = () => {
   const [totalClasses, setTotalClasses] = useState("");
@@ -22,7 +24,7 @@ const AttendanceCalculator = () => {
 
     setError("");
     const percentage = ((attended / total) * 100).toFixed(2);
-    setAttendancePercentage(percentage);
+    setAttendancePercentage(parseFloat(percentage));
     setClassesNeeded(null);
   };
 
@@ -56,72 +58,50 @@ const AttendanceCalculator = () => {
     }
   };
 
-  const getProgressColor = () => {
-    if (attendancePercentage >= 75) return "success";
-    if (attendancePercentage >= 50) return "warning";
-    return "danger";
-  };
-
   return (
-    <div className="attendance-calculator">
-      <h2>Attendance Calculator</h2>
-      {error && <Alert variant="danger">{error}</Alert>}
+    <div className="attendance-page">
+      <h1>Attendance Calculator</h1>
+      <p className="subtitle">Track and plan your attendance smartly.</p>
 
-      <Form>
-        <Form.Group>
-          <Form.Label>Total Classes</Form.Label>
-          <Form.Control
-            type="number"
-            value={totalClasses}
-            onChange={(e) => setTotalClasses(e.target.value)}
-            placeholder="Enter total classes"
-          />
-        </Form.Group>
+      {error && <div className="error-box">{error}</div>}
 
-        <Form.Group>
-          <Form.Label>Attended Classes</Form.Label>
-          <Form.Control
-            type="number"
-            value={attendedClasses}
-            onChange={(e) => setAttendedClasses(e.target.value)}
-            placeholder="Enter attended classes"
-          />
-        </Form.Group>
-
-        <Button variant="primary" className="mt-3" onClick={calculateAttendance}>
-          Calculate Attendance
-        </Button>
-      </Form>
+      <div className="form-section">
+        <input
+          type="number"
+          placeholder="Total Classes"
+          value={totalClasses}
+          onChange={(e) => setTotalClasses(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Attended Classes"
+          value={attendedClasses}
+          onChange={(e) => setAttendedClasses(e.target.value)}
+        />
+        <button onClick={calculateAttendance}>Calculate Attendance</button>
+      </div>
 
       {attendancePercentage !== null && (
-        <div className="mt-4">
-          <h4>Attendance Percentage: {attendancePercentage}%</h4>
-          <ProgressBar variant={getProgressColor()} now={attendancePercentage} />
+        <div className="result-box">
+          <h3>Your Attendance: {attendancePercentage}%</h3>
+          <div className="progress-bar-wrapper">
+            <div className={`progress-bar ${attendancePercentage >= 75 ? "green" : attendancePercentage >= 50 ? "yellow" : "red"}`} style={{ width: `${attendancePercentage}%` }}></div>
+          </div>
         </div>
       )}
 
       {attendancePercentage !== null && (
-        <div className="mt-4">
-          <h3>Predict Required Attendance</h3>
-          <Form.Group>
-            <Form.Label>Target Attendance (%)</Form.Label>
-            <Form.Control
-              type="number"
-              value={targetPercentage}
-              onChange={(e) => setTargetPercentage(e.target.value)}
-              placeholder="Enter target percentage"
-            />
-          </Form.Group>
+        <div className="target-section">
+          <h4>🎯 Predict Required Attendance</h4>
+          <input
+            type="number"
+            placeholder="Target Attendance %"
+            value={targetPercentage}
+            onChange={(e) => setTargetPercentage(e.target.value)}
+          />
+          <button onClick={predictRequiredClasses}>Calculate Required Classes</button>
 
-          <Button variant="success" className="mt-3" onClick={predictRequiredClasses}>
-            Calculate Required Classes
-          </Button>
-
-          {classesNeeded && (
-            <Alert variant="info" className="mt-3">
-              {classesNeeded}
-            </Alert>
-          )}
+          {classesNeeded && <div className="info-box">{classesNeeded}</div>}
         </div>
       )}
     </div>
