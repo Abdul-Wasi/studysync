@@ -1,0 +1,63 @@
+/* src/styles/SGPACalculator.css */
+
+.sgpa-calculator {
+    padding: 50px 20px;
+    background-color: #fff;
+    max-width: 700px;
+    margin: auto;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+  }
+  
+  .sgpa-calculator h2 {
+    text-align: center;
+    color: #278783;
+    margin-bottom: 30px;
+  }
+  
+  .subject-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+  }
+  
+  .subject-row input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  .add-btn,
+  .calculate-btn {
+    padding: 10px 20px;
+    margin-top: 20px;
+    margin-right: 10px;
+    background-color: #278783;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .add-btn:hover,
+  .calculate-btn:hover {
+    background-color: #206b68;
+  }
+  
+  .error-msg {
+    color: red;
+    margin-top: 15px;
+  }
+  
+  .result {
+    background-color: #f2fdfc;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #005e54;
+  }
+  

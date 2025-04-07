@@ -1,13 +1,14 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import AttendanceCalculator from "./components/AttendanceCalculator";
 import Home from "./pages/Home";
 import Tools from "./pages/Tools";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import AttendanceCalculator from "./components/AttendanceCalculator";
+import SGPACalculator from "./components/SGPA_Calculator";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
           <Route path="tools/attendance" element={<AttendanceCalculator />} />
+          <Route path="/tools/sgpa" element={<SGPACalculator />} />
         </Routes>
       </div>
       <Footer />

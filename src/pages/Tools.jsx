@@ -19,11 +19,12 @@ const Tools = () => {
           </p>
         </Link>
 
-        <div className="tool-card coming-soon">
+        <Link to="/tools/sgpa" className="tool-card">
           <i className="fas fa-graduation-cap tool-icon"></i>
           <h3>SGPA Calculator</h3>
-          <p>Coming Soon: Easily compute your SGPA from your semester grades.</p>
-        </div>
+          <p>Easily compute your SGPA from your semester grades.</p>
+        </Link>
+
 
         <div className="tool-card coming-soon">
           <i className="fas fa-chart-pie tool-icon"></i>
