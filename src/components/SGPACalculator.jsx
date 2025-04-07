@@ -24,25 +24,23 @@ const SGPACalculator = () => {
     setScale(selectedScale || []);
   }, [university, degree]);
 
-  const calculateGradeAndPoint = (index, key, value) => {
-    const updatedSubjects = [...subjects];
-    updatedSubjects[index][key] = value;
-
-    const subject = updatedSubjects[index];
+  const handleSubjectChange = (index, key, value) => {
+    const updated = [...subjects];
+    updated[index][key] = value;
 
     if (key === "marks") {
       const num = parseFloat(value);
       const matched = scale.find((entry) => num >= entry.min && num <= entry.max);
       if (matched) {
-        subject.grade = matched.grade;
-        subject.gradePoint = matched.point;
+        updated[index].grade = matched.grade;
+        updated[index].gradePoint = matched.point;
       }
     }
 
     if (key === "grade") {
       const matched = scale.find((entry) => entry.grade === value.toUpperCase());
       if (matched) {
-        subject.gradePoint = matched.point;
+        updated[index].gradePoint = matched.point;
       }
     }
 
@@ -50,11 +48,11 @@ const SGPACalculator = () => {
       const num = parseFloat(value);
       const matched = scale.find((entry) => entry.point === num);
       if (matched) {
-        subject.grade = matched.grade;
+        updated[index].grade = matched.grade;
       }
     }
 
-    setSubjects(updatedSubjects);
+    setSubjects(updated);
   };
 
   const addSubject = () => {
@@ -67,23 +65,18 @@ const SGPACalculator = () => {
 
   const calculateSGPA = () => {
     let totalCredits = 0;
-    let totalWeightedPoints = 0;
+    let totalPoints = 0;
 
-    for (const subject of subjects) {
-      const credit = parseFloat(subject.credit);
-      const gradePoint = parseFloat(subject.gradePoint);
-      if (isNaN(credit) || isNaN(gradePoint)) continue;
+    subjects.forEach((s) => {
+      const gp = parseFloat(s.gradePoint);
+      const c = parseFloat(s.credit);
+      if (!isNaN(gp) && !isNaN(c)) {
+        totalCredits += c;
+        totalPoints += gp * c;
+      }
+    });
 
-      totalCredits += credit;
-      totalWeightedPoints += credit * gradePoint;
-    }
-
-    if (totalCredits === 0) {
-      setSGPA(null);
-      return;
-    }
-
-    const result = (totalWeightedPoints / totalCredits).toFixed(2);
+    const result = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : null;
     setSGPA(result);
   };
 
@@ -116,37 +109,38 @@ const SGPACalculator = () => {
       </div>
 
       <div className="subjects">
-        {subjects.map((sub, idx) => (
-          <div key={idx} className="subject-row">
-            <span>{sub.name}</span>
+        {subjects.map((subject, index) => (
+          <div key={index} className="subject-row">
+            <input
+              type="text"
+              value={subject.name}
+              onChange={(e) => handleSubjectChange(index, "name", e.target.value)}
+              placeholder="Subject Name"
+            />
             <input
               type="number"
               placeholder="Marks"
-              value={sub.marks}
-              onChange={(e) => calculateGradeAndPoint(idx, "marks", e.target.value)}
+              value={subject.marks}
+              onChange={(e) => handleSubjectChange(index, "marks", e.target.value)}
             />
             <input
               type="text"
               placeholder="Grade"
-              value={sub.grade}
-              onChange={(e) => calculateGradeAndPoint(idx, "grade", e.target.value)}
+              value={subject.grade}
+              onChange={(e) => handleSubjectChange(index, "grade", e.target.value)}
             />
             <input
               type="number"
               step="0.1"
               placeholder="Grade Point"
-              value={sub.gradePoint}
-              onChange={(e) => calculateGradeAndPoint(idx, "gradePoint", e.target.value)}
+              value={subject.gradePoint}
+              onChange={(e) => handleSubjectChange(index, "gradePoint", e.target.value)}
             />
             <input
               type="number"
               placeholder="Credits"
-              value={sub.credit}
-              onChange={(e) => {
-                const updated = [...subjects];
-                updated[idx].credit = e.target.value;
-                setSubjects(updated);
-              }}
+              value={subject.credit}
+              onChange={(e) => handleSubjectChange(index, "credit", e.target.value)}
             />
           </div>
         ))}
@@ -157,7 +151,11 @@ const SGPACalculator = () => {
         <button onClick={calculateSGPA}>Calculate SGPA</button>
       </div>
 
-      {sgpa && <div className="result">Your SGPA is: <strong>{sgpa}</strong></div>}
+      {sgpa && (
+        <div className="result">
+          Your SGPA is: <strong>{sgpa}</strong>
+        </div>
+      )}
     </div>
   );
 };
