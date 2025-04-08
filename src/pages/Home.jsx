@@ -7,19 +7,22 @@ const Home = () => {
   return (
     <div className="home">
       {/* Hero Section */}
-      <div className="hero">
+      <section className="hero">
         <div className="hero-text">
           <h1>Unlock the Power of Smart Learning</h1>
-          <p>Essential tools for students & scholars to manage academics effortlessly.</p>
+          <p>
+            Essential tools for students & scholars to manage academics effortlessly.
+          </p>
           <Link to="/tools" className="cta-button">
             Explore Tools
           </Link>
         </div>
-        <img src={heroImage} alt="Study Illustration" className="hero-image" />
-      </div>
+        <img src={heroImage} alt="Students studying illustration" className="hero-image" />
+      </section>
 
       {/* Features Section */}
-      <div className="features">
+      <section className="features">
+        <p className="features-subheading">Designed to simplify student life</p>
         <h2>Why Choose UniTools?</h2>
         <div className="feature-list">
           <div className="feature-card">
@@ -38,7 +41,7 @@ const Home = () => {
             <p>Visualize academic progress with graphs & stats.</p>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };

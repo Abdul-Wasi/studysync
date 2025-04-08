@@ -9,6 +9,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AttendanceCalculator from "./components/AttendanceCalculator";
 import SgpaCalculator from "./components/SgpaCalculator";
+import ComingSoon from "./components/ComingSoon";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="contact" element={<Contact />} />
           <Route path="tools/attendance" element={<AttendanceCalculator />} />
           <Route path="/tools/sgpa" element={<SgpaCalculator />} />
+          <Route path="/coming-soon" element={<ComingSoon />} />
         </Routes>
       </div>
       <Footer />

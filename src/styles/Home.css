@@ -34,11 +34,13 @@
   border-radius: 8px;
   font-weight: 600;
   text-decoration: none;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .cta-button:hover {
   background-color: #1f6d6e;
+  transform: scale(1.05);
 }
 
 .hero-image {
@@ -53,6 +55,12 @@
   padding: 60px 20px;
   background-color: #f9f9f9;
   text-align: center;
+}
+
+.features-subheading {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 10px;
 }
 
 .features h2 {
@@ -95,4 +103,23 @@
 .feature-card p {
   color: #555;
   font-size: 1rem;
+}
+
+/* Responsive Layout */
+@media (min-width: 768px) {
+  .hero {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  .hero-text {
+    flex: 1;
+    padding-right: 40px;
+  }
+
+  .hero-image {
+    flex: 1;
+    margin-top: 0;
+  }
 }
