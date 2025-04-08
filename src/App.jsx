@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react"
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -11,12 +12,14 @@ import AttendanceCalculator from "./components/AttendanceCalculator";
 import SGPACalculator from "./components/SGPACalculator";
 import ComingSoon from "./components/ComingSoon";
 
+
 function App() {
   return (
     <>
       <Navbar />
       <div className="main-container">
         <Routes>
+          <Analytics />
           <Route path="/" element={<Home />} />
           <Route path="tools" element={<Tools />} />
           <Route path="about" element={<About />} />
