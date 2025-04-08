@@ -8,7 +8,7 @@ import Contact from "./pages/Contact";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AttendanceCalculator from "./components/AttendanceCalculator";
-import SgpaCalculator from "./components/SgpaCalculator";
+import SGPACalculator from "./components/SGPACalculator";
 import ComingSoon from "./components/ComingSoon";
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
           <Route path="tools/attendance" element={<AttendanceCalculator />} />
-          <Route path="/tools/sgpa" element={<SgpaCalculator />} />
+          <Route path="/tools/sgpa" element={<SGPACalculator />} />
           <Route path="/coming-soon" element={<ComingSoon />} />
         </Routes>
       </div>
