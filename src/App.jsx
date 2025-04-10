@@ -17,9 +17,9 @@ function App() {
   return (
     <>
       <Navbar />
+      <Analytics />
       <div className="main-container">
         <Routes>
-          <Analytics />
           <Route path="/" element={<Home />} />
           <Route path="tools" element={<Tools />} />
           <Route path="about" element={<About />} />
