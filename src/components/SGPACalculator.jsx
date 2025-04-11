@@ -1,3 +1,5 @@
+// src/components/SGPACalculator.jsx
+
 import React, { useState, useEffect } from "react";
 import gradingScales from "../utils/gradingScales";
 import "../styles/SGPACalculator.css";
