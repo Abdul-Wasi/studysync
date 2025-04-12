@@ -1,79 +1,44 @@
+/* SGPACalculator.css */
 .sgpa-calculator {
-  max-width: 900px;
+  max-width: 800px;
   margin: auto;
-  padding: 20px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
-}
-
-.sgpa-calculator h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.dropdowns {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 20px;
-  justify-content: center;
-}
-
-.dropdowns label {
-  display: flex;
-  flex-direction: column;
-  font-weight: bold;
-  min-width: 200px;
-}
-
-.subjects {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  padding: 2rem;
 }
 
 .subject-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 10px;
-  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .subject-row input {
-  flex: 1 1 150px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  flex: 1;
+  min-width: 120px;
+  padding: 0.5rem;
+  border: 1px solid var(--primary-color);
+  border-radius: var(--border-radius);
 }
 
 .buttons {
-  margin-top: 20px;
   display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-button {
-  padding: 10px 16px;
-  background-color: #1e88e5;
-  border: none;
+.buttons button {
+  flex: 1;
+  background-color: var(--primary-color);
   color: white;
-  border-radius: 6px;
+  border: none;
+  padding: 0.7rem;
+  border-radius: var(--border-radius);
   cursor: pointer;
-  font-weight: bold;
-}
-
-button:hover {
-  background-color: #1565c0;
 }
 
 .result {
-  margin-top: 25px;
-  text-align: center;
-  font-size: 1.3rem;
-  font-weight: bold;
-  color: green;
+  margin-top: 1rem;
+  background-color: var(--secondary-color);
+  padding: 1rem;
+  border-radius: var(--border-radius);
 }

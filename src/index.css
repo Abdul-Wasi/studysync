@@ -1,17 +1,53 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@400;600;700&display=swap');
 
 :root {
-  font-family: 'Poppins', sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color-scheme: light;
+  --primary-color: #278783;
+  --secondary-color: #FFEBD0;
+  --dark-bg: #121212;
+  --dark-text: #f0f0f0;
+  --light-bg: #ffffff;
+  --light-text: #1a1a1a;
+  --error-color: #e74c3c;
+  --accent-color: #ffa07a;
+  --border-radius: 10px;
+
+  --font-heading: 'Sora', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+
+  --bg-color: var(--light-bg);
+  --text-color: var(--light-text);
+  --text-light: #555;
+  --card-bg: #fefefe;
+  --card-border: #ddd;
 }
 
 body {
   margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
+  font-family: var(--font-body);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+body.dark {
+  --bg-color: var(--dark-bg);
+  --text-color: var(--dark-text);
+  --text-light: #bbb;
+  --card-bg: #1e1e1e;
+  --card-border: #333;
 }

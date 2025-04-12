@@ -1,119 +1,165 @@
-/* Home.css */
-
-.home {
-  padding: 2rem;
-  background-color: #FFEBD0; /* Peach Cream */
-}
-
-/* Hero Section */
-.hero {
+.home-container {
+  padding: 3rem 2rem;
+  min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 2rem;
-  margin-bottom: 4rem;
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition: background 0.4s ease, color 0.4s ease;
+  animation: fadeIn 0.8s ease-in-out both;
 }
 
-.hero-text {
-  flex: 1;
-  min-width: 280px;
-  color: #278783; /* Deep Aqua */
-}
-
-.hero-text h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.hero-text p {
-  font-size: 1.2rem;
-  margin-bottom: 1.5rem;
-}
-
-.cta-button {
-  background-color: #278783; /* Deep Aqua */
-  color: white;
-  padding: 0.8rem 1.5rem;
-  border: none;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s;
-}
-
-.cta-button:hover {
-  background-color: #1d6563;
-}
-
-.hero-image {
-  flex: 1;
-  max-width: 450px;
-  width: 100%;
-  border-radius: 12px;
-}
-
-/* Features Section */
-.features {
+.home-title {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  font-weight: 700;
   text-align: center;
-  color: #278783;
-  background-color: #FFEBD0;
-  
+  background: linear-gradient(90deg, #278783, #32c2a3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: popIn 1s ease-in-out;
 }
 
-.features-subheading {
-  color: #666;
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-}
-
-.features h2 {
-  font-size: 2rem;
+.home-subtitle {
+  font-family: var(--font-body);
+  font-size: 1.4rem;
+  margin-top: 0.5rem;
   margin-bottom: 2rem;
-  color: #278783;
+  text-align: center;
+  color: var(--text-light);
+  animation: fadeInUp 1s ease-in-out;
 }
 
-.feature-list {
+.home-features {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
+  animation: fadeIn 1.5s ease-in-out;
 }
 
 .feature-card {
-  background-color: #ffffff;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-  flex: 1;
-  min-width: 250px;
-  max-width: 300px;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 2rem;
+  width: 280px;
   text-align: center;
-  color: #278783;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  font-family: var(--font-body);
 }
 
-.feature-card i {
-  font-size: 2rem;
-  color: #278783;
+.feature-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+  border-color: var(--primary-color);
+  background: linear-gradient(to bottom right, #ffffff, #f0fdfa);
+}
+
+.feature-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+  transform: rotate(8deg) scale(1.1);
+}
+
+.feature-title {
+  font-size: 1.3rem;
+  font-weight: 600;
   margin-bottom: 0.5rem;
+  font-family: var(--font-heading);
 }
 
-/* Mobile Styles */
-@media (max-width: 768px) {
-  .hero {
-    flex-direction: column;
-    text-align: center;
-  }
+.feature-desc {
+  font-size: 1rem;
+  color: var(--text-light);
+}
 
-  .hero-text h1 {
-    font-size: 2rem;
-  }
+/* Animated Button */
+.explore-button {
+  padding: 0.75rem 2rem;
+  background: var(--primary-color);
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  margin-top: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.4s ease, transform 0.2s ease;
+  font-weight: 600;
+}
 
-  .hero-text p {
-    font-size: 1rem;
-  }
+.explore-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.2);
+  transform: skewX(-30deg);
+  transition: left 0.5s;
+}
 
-  .features h2 {
-    font-size: 1.5rem;
+.explore-button:hover {
+  transform: scale(1.05);
+  background: var(--accent-color);
+}
+
+.explore-button:hover::before {
+  left: 100%;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }

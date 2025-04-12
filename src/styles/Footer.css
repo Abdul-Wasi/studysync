@@ -1,25 +1,19 @@
 /* src/styles/Footer.css */
 
+/* Footer.css */
 .footer {
-  background-color: #278783;
-  color: #fff;
-  padding: 24px 16px;
+  background-color: var(--primary-color);
+  color: white;
   text-align: center;
-  font-size: 0.95rem;
-  margin-top: 40px;
+  padding: 1.5rem 1rem;
 }
 
 .footer-links {
-  margin-top: 10px;
+  margin-top: 0.5rem;
 }
 
 .footer-links a {
-  color: #ffffff;
-  margin: 0 12px;
+  color: white;
+  margin: 0 0.8rem;
   text-decoration: none;
-  font-weight: 500;
-}
-
-.footer-links a:hover {
-  text-decoration: underline;
 }

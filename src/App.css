@@ -1,6 +1,14 @@
-@import "tailwindcss";
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-body);
+  transition: 0.3s ease-in-out;
+}
 
-* {
-  font-family: 'Poppins', sans-serif;
-  box-sizing: border-box;
+.dark-mode .app-container {
+  background: var(--dark-bg);
+  color: var(--dark-text);
 }
