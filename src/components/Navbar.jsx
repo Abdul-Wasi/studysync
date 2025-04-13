@@ -1,3 +1,5 @@
+// src/components/Navbar.jsx
+
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaSun, FaMoon, FaBars, FaTimes } from "react-icons/fa";
