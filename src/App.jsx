@@ -2,6 +2,7 @@
 
 import { Routes, Route } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react"
+import { ToastContainer } from "react-toastify";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -10,6 +11,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
 import AttendanceCalculator from "./components/AttendanceCalculator";
 import SGPACalculator from "./components/SGPACalculator";
 import ComingSoon from "./components/ComingSoon";
@@ -20,6 +22,7 @@ function App() {
     <>
       <Navbar />
       <Analytics />
+      <ToastContainer />
       <div className="main-container">
         <Routes>
           <Route path="/" element={<Home />} />

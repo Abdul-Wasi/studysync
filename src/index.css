@@ -51,3 +51,18 @@ body.dark {
   --card-bg: #1e1e1e;
   --card-border: #333;
 }
+
+
+/* For toastify alerts */
+/* You can override default toast styles like this */
+.Toastify__toast--success {
+  background-color: #278783;
+  color: #fff;
+  font-weight: bold;
+}
+
+.Toastify__toast--error {
+  background-color: #ff6b6b;
+  color: #fff;
+  font-weight: bold;
+}
