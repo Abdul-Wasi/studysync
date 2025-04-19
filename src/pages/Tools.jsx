@@ -32,11 +32,11 @@ const Tools = () => {
           <p>Coming Soon: Get graphs showing your attendance patterns over time.</p>
         </div>
 
-        <div className="tool-card coming-soon">
+        <Link to="/tools/studyPlanner" className="tool-card">
           <i className="fas fa-calendar-alt tool-icon"></i>
           <h3>Study Planner</h3>
           <p>Coming Soon: Plan your study schedule and stay organized daily.</p>
-        </div>
+          </Link>
 
         <div className="tool-card coming-soon">
           <i className="fas fa-comments tool-icon"></i>

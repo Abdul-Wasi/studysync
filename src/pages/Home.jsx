@@ -1,4 +1,4 @@
-// src/components/Home.js
+// src/components/Home.jsx
 
 import React from 'react';
 import "../styles/Home.css";import { FaCalculator, FaClipboardList, FaChartBar, FaBrain, FaCalendarAlt, FaComments } from 'react-icons/fa';

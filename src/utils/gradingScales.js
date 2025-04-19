@@ -1,3 +1,6 @@
+/* src/utils/gradingScales.js */
+
+
 const gradingScales = {
     IUST: {
       "B.Tech": [

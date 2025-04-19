@@ -15,11 +15,12 @@ import "react-toastify/dist/ReactToastify.css";
 import AttendanceCalculator from "./components/AttendanceCalculator";
 import SGPACalculator from "./components/SGPACalculator";
 import ComingSoon from "./components/ComingSoon";
+import StudyPlanner from "./components/StudyPlanner";
 
 
 function App() {
   return (
-    <>
+    <div className="app-container">
       <Navbar />
       <Analytics />
       <ToastContainer />
@@ -31,11 +32,12 @@ function App() {
           <Route path="contact" element={<Contact />} />
           <Route path="tools/attendance" element={<AttendanceCalculator />} />
           <Route path="/tools/sgpa" element={<SGPACalculator />} />
+          <Route path="/tools/studyPlanner" element={<StudyPlanner />} />
           <Route path="/coming-soon" element={<ComingSoon />} />
         </Routes>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 
