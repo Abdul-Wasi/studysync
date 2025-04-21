@@ -16,7 +16,8 @@ import AttendanceCalculator from "./components/AttendanceCalculator";
 import SGPACalculator from "./components/SGPACalculator";
 import ComingSoon from "./components/ComingSoon";
 import StudyPlanner from "./components/StudyPlanner";
-
+import CitationGenerator from './components/CitationGenerator';
+import BudgetingTool from './components/BudgetingTool';
 
 function App() {
   return (
@@ -33,7 +34,9 @@ function App() {
           <Route path="tools/attendance" element={<AttendanceCalculator />} />
           <Route path="/tools/sgpa" element={<SGPACalculator />} />
           <Route path="/tools/studyPlanner" element={<StudyPlanner />} />
-          <Route path="/coming-soon" element={<ComingSoon />} />
+          <Route path="/tools/coming-soon" element={<ComingSoon />} />
+          <Route path="/tools/citationGenerator" element={<CitationGenerator />} />
+          <Route path="/tools/budgetingTool" element={<BudgetingTool />} />
         </Routes>
       </div>
       <Footer />

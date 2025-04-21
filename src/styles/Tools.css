@@ -1,22 +1,33 @@
-/* src/styles/Tools.css */
-
 .tools-page {
-  padding: 60px 20px;
-  background-color: #fef9f4;
-  text-align: center;
+  padding: 80px 20px 60px;  /* Adjusted padding for consistent spacing */
+  background-color: var(--bg-color);  /* Consistent with the home page's background */
   min-height: 100vh;
+  font-family: var(--font-body);  /* Same body font as in About.css */
 }
 
 .tools-page h1 {
-  color: #278783;
-  font-size: 2.5rem;
-  margin-bottom: 10px;
+  font-size: 2.5rem;  /* Same font size as About.css h1 */
+  color: var(--primary-color);
+  font-weight: 700;
+  font-family: var(--font-heading);  /* Consistent heading font */
+  margin-bottom: 1rem;
+  animation: fadeInUp 0.6s ease forwards;
 }
 
+.tools-container {
+  max-width: 900px;  /* Same as About page */
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+
 .subtitle {
-  color: #555;
+  font-size: 1.05rem;  /* Same font size as About.css p */
+  color: var(--text-color);  /* Consistent text color */
   margin-bottom: 40px;
-  font-size: 1.1rem;
+  line-height: 1.75;
+  padding: 0 0.5rem;
 }
 
 .tools-grid {
@@ -28,23 +39,24 @@
 }
 
 .tool-card {
-  background-color: white;
-  border: 1px solid #eee;
+  background-color: var(--card-bg);  /* Matching card background */
+  border: 1px solid var(--card-border);
   padding: 30px;
-  border-radius: 12px;
+  border-radius: var(--border-radius);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-decoration: none;
-  color: #003D4D;
+  color: var(--text-color);  /* Matching text color */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .tool-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .tool-icon {
   font-size: 2.5rem;
-  color: #278783;
+  color: var(--primary-color);  /* Matching primary color for icons */
   margin-bottom: 15px;
 }
 
@@ -52,3 +64,51 @@
   opacity: 0.6;
   pointer-events: none;
 }
+
+.coming-soon h3,
+.coming-soon p {
+  color: var(--text-light);  /* Light color for upcoming tools */
+}
+
+/* Fade-in animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tools-page {
+    padding: 60px 15px;
+  }
+
+  .tools-page h1 {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .tools-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .tool-card {
+    padding: 25px;
+  }
+
+  .tool-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+}
+
+

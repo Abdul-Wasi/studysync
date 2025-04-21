@@ -1,23 +1,61 @@
-
-
+/* src/styles/ComingSoon.css */
 .coming-soon-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  border-radius: var(--border-radius);
+  background-color: var(--card-bg);
+  color: var(--text-color);
   text-align: center;
-  padding: 4rem 2rem;
 }
 
-.notify input {
-  padding: 0.5rem;
-  border-radius: var(--border-radius);
-  border: 1px solid var(--primary-color);
-  width: 250px;
-  margin-right: 0.5rem;
+.coming-soon-container h2 {
+  font-size: 2rem;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+  font-family: var(--font-heading);
 }
 
-.notify button {
-  padding: 0.5rem 1rem;
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: var(--border-radius);
-  cursor: pointer;
+.coming-soon-container p {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  margin-bottom: 2rem;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+}
+.loading-spinner div {
+  position: absolute;
+  border: 4px solid var(--primary-color);
+  opacity: 1;
+  border-radius: 50%;
+  animation: loading-spinner 1.4s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+.loading-spinner div:nth-child(1) {
+  animation-delay: -0.3s;
+}
+.loading-spinner div:nth-child(2) {
+  animation-delay: -0.1s;
+}
+
+@keyframes loading-spinner {
+  0% {
+    top: 6px;
+    left: 6px;
+    width: 38px;
+    height: 38px;
+    opacity: 1;
+  }
+  100% {
+    top: 22px;
+    left: 22px;
+    width: 0px;
+    height: 0px;
+    opacity: 0;
+  }
 }

@@ -1,6 +1,7 @@
 // src/components/AttendanceCalculator.jsx
 
 import React, { useState } from "react";
+import { useEffect } from "react";
 import "../styles/AttendanceCalculator.css";
 
 const AttendanceCalculator = () => {
@@ -8,7 +9,8 @@ const AttendanceCalculator = () => {
   const [attendedClasses, setAttendedClasses] = useState("");
   const [targetPercentage, setTargetPercentage] = useState("");
   const [attendancePercentage, setAttendancePercentage] = useState(null);
-  const [classesNeeded, setClassesNeeded] = useState(null);
+  const [classesNeededToAttend, setClassesNeededToAttend] = useState(null);
+  const [classesCanMiss, setClassesCanMiss] = useState(null);
   const [error, setError] = useState("");
 
   const calculateAttendance = () => {
@@ -18,14 +20,24 @@ const AttendanceCalculator = () => {
     if (isNaN(total) || isNaN(attended) || total <= 0 || attended < 0 || attended > total) {
       setError("Please enter valid numbers. Attended classes cannot exceed total classes.");
       setAttendancePercentage(null);
-      setClassesNeeded(null);
+      setClassesNeededToAttend(null);
+      setClassesCanMiss(null);
       return;
     }
 
     setError("");
     const percentage = ((attended / total) * 100).toFixed(2);
     setAttendancePercentage(parseFloat(percentage));
-    setClassesNeeded(null);
+    setClassesNeededToAttend(null);
+    setClassesCanMiss(calculateClassesCanMiss(total, attended));
+  };
+
+  const calculateClassesCanMiss = (total, attended) => {
+    if (isNaN(parseFloat(targetPercentage)) || parseFloat(targetPercentage) <= 0 || parseFloat(targetPercentage) > 100) {
+      return "Enter target % to see missable classes.";
+    }
+    const canMiss = Math.floor(total - (total * (parseFloat(targetPercentage) / 100)));
+    return Math.max(0, canMiss - attended);
   };
 
   const predictRequiredClasses = () => {
@@ -35,28 +47,37 @@ const AttendanceCalculator = () => {
 
     if (isNaN(target) || target <= 0 || target > 100) {
       setError("Please enter a valid target percentage (1-100).");
-      setClassesNeeded(null);
+      setClassesNeededToAttend(null);
       return;
     }
 
     setError("");
 
-    let extraClasses = 0;
-    let newTotal = total;
-    let newAttended = attended;
-
-    while ((newAttended / newTotal) * 100 < target) {
-      extraClasses++;
-      newTotal++;
-      newAttended++;
+    if ((attended / total) * 100 >= target) {
+      setClassesNeededToAttend("You have already achieved your target!");
+      return;
     }
 
-    if (extraClasses === 0) {
-      setClassesNeeded("You have already achieved your target!");
-    } else {
-      setClassesNeeded(`You need to attend ${extraClasses} more consecutive classes.`);
+    let needed = 0;
+    let currentTotal = total;
+    let currentAttended = attended;
+    while ((currentAttended / currentTotal) * 100 < target) {
+      needed++;
+      currentTotal++;
+      currentAttended++;
     }
+    setClassesNeededToAttend(`You need to attend ${needed} more consecutive classes to reach ${target}% attendance.`);
   };
+
+  useEffect(() => {
+    if (totalClasses !== "" && attendedClasses !== "") {
+      calculateAttendance();
+    }
+    if (totalClasses !== "" && attendedClasses !== "" && targetPercentage !== "") {
+      predictRequiredClasses();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalClasses, attendedClasses, targetPercentage]);
 
   return (
     <div className="attendance-page">
@@ -85,25 +106,34 @@ const AttendanceCalculator = () => {
         <div className="result-box">
           <h3>Your Attendance: {attendancePercentage}%</h3>
           <div className="progress-bar-wrapper">
-            <div className={`progress-bar ${attendancePercentage >= 75 ? "green" : attendancePercentage >= 50 ? "yellow" : "red"}`} style={{ width: `${attendancePercentage}%` }}></div>
+            <div
+              className={`progress-bar ${
+                attendancePercentage >= 75 ? "green" : attendancePercentage >= 50 ? "yellow" : "red"
+              }`}
+              style={{ width: `${attendancePercentage}%` }}
+            ></div>
           </div>
+          {classesCanMiss !== null && typeof classesCanMiss === 'number' && (
+            <p className="info-text">You can miss <strong>{classesCanMiss}</strong> more classes to maintain {targetPercentage || 'your target'}% (approx.).</p>
+          )}
+          {classesCanMiss !== null && typeof classesCanMiss === 'string' && (
+            <p className="info-text">{classesCanMiss}</p>
+          )}
         </div>
       )}
 
-      {attendancePercentage !== null && (
-        <div className="target-section">
-          <h4>🎯 Predict Required Attendance</h4>
-          <input
-            type="number"
-            placeholder="Target Attendance %"
-            value={targetPercentage}
-            onChange={(e) => setTargetPercentage(e.target.value)}
-          />
-          <button onClick={predictRequiredClasses}>Calculate Required Classes</button>
+      <div className="target-section">
+        <h4>🎯 Predict Required Attendance</h4>
+        <input
+          type="number"
+          placeholder="Target Attendance %"
+          value={targetPercentage}
+          onChange={(e) => setTargetPercentage(e.target.value)}
+        />
+        <button onClick={predictRequiredClasses}>Calculate Required Classes</button>
 
-          {classesNeeded && <div className="info-box">{classesNeeded}</div>}
-        </div>
-      )}
+        {classesNeededToAttend && <div className="info-box">{classesNeededToAttend}</div>}
+      </div>
     </div>
   );
 };
