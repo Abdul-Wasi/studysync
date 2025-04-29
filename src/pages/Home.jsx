@@ -1,7 +1,15 @@
-// src/components/Home.jsx
-
 import React from 'react';
-import "../styles/Home.css";import { FaCalculator, FaClipboardList, FaChartBar, FaBrain, FaCalendarAlt, FaComments } from 'react-icons/fa';
+import "../styles/Home.css";
+import {
+  FaCalculator,
+  FaClipboardList,
+  FaChartPie,
+  FaBrain,
+  FaCalendarAlt,
+  FaQuoteRight,
+  FaWallet,
+  FaComments
+} from 'react-icons/fa';
 
 const Home = () => {
   return (
@@ -24,15 +32,15 @@ const Home = () => {
           <FaClipboardList className="feature-icon" />
           <h3 className="feature-title">Requirement Estimator</h3>
           <p className="feature-desc">
-            Find how many more classes you need to reach 75%.
+            Find how many more classes you need to reach x%.
           </p>
         </div>
 
         <div className="feature-card">
-          <FaChartBar className="feature-icon" />
+          <FaChartPie className="feature-icon" />
           <h3 className="feature-title">Attendance Visualizer</h3>
           <p className="feature-desc">
-            Graph your attendance data semester-wise.
+            Get semester-wise charts of your attendance trends.
           </p>
         </div>
 
@@ -49,6 +57,22 @@ const Home = () => {
           <h3 className="feature-title">Study Planner</h3>
           <p className="feature-desc">
             Organize your study goals and tasks with a smart planner.
+          </p>
+        </div>
+
+        <div className="feature-card">
+          <FaQuoteRight className="feature-icon" />
+          <h3 className="feature-title">Citation Generator</h3>
+          <p className="feature-desc">
+            Generate citations in different academic formats instantly.
+          </p>
+        </div>
+
+        <div className="feature-card">
+          <FaWallet className="feature-icon" />
+          <h3 className="feature-title">Budgeting Tool</h3>
+          <p className="feature-desc">
+            Plan your budget and keep track of expenses efficiently.
           </p>
         </div>
 
