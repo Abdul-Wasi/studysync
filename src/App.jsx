@@ -12,6 +12,8 @@ import Contact from "./pages/Contact";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
 import AttendanceCalculator from "./components/AttendanceCalculator";
 import SGPACalculator from "./components/SGPACalculator";
 import ComingSoon from "./components/ComingSoon";
@@ -28,6 +30,8 @@ function App() {
       <div className="main-container">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="tools" element={<Tools />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
