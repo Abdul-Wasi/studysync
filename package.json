@@ -19,6 +19,7 @@
     "bootstrap": "^5.3.5",
     "button": "^1.1.1",
     "chart.js": "^4.4.9",
+    "firebase": "^11.6.1",
     "input": "^1.0.1",
     "lucide-react": "^0.501.0",
     "react": "^18.3.1",
