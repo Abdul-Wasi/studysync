@@ -80,8 +80,8 @@ const SGPACalculator = () => {
   };
 
   return (
-    <>
-      SGPA Calculator
+    <div className="sgpa-calculator">
+      <h2>🎓 SGPA Calculator</h2>
 
       <div className="dropdowns">
         <label>
@@ -147,15 +147,15 @@ const SGPACalculator = () => {
 
       <div className="buttons">
         <button onClick={addSubject}>+ Add Subject</button>
-        <button onClick={calculateSGPA}>Calculate SGPA</button>
+        <button onClick={calculateSGPA}>🎯 Calculate SGPA</button>
       </div>
 
       {sgpa && (
         <div className="result">
-          Your SGPA is: <strong>{sgpa}</strong>
+          ✅ <strong>Your SGPA is: {sgpa}</strong>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
