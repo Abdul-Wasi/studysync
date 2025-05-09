@@ -1,7 +1,7 @@
 //App.jsx
 
-import { Routes, Route } from "react-router-dom";
-import { Analytics } from "@vercel/analytics/react"
+import { Routes, Route, Navigate } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import { ToastContainer } from "react-toastify";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -9,9 +9,6 @@ import Home from "./pages/Home";
 import Tools from "./pages/Tools";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "react-toastify/dist/ReactToastify.css";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import AttendanceCalculator from "./components/AttendanceCalculator";
@@ -20,6 +17,10 @@ import ComingSoon from "./components/ComingSoon";
 import StudyPlanner from "./components/StudyPlanner";
 import CitationGenerator from './components/CitationGenerator';
 import BudgetingTool from './components/BudgetingTool';
+import { auth } from "./firebase"; // Assuming you've initialized Firebase auth
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -35,8 +36,7 @@ function App() {
           <Route path="tools" element={<Tools />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
-          <Route path="tools/attendance" element={<AttendanceCalculator />} />
-          <Route path="/tools/sgpa" element={<SGPACalculator />} />
+          <Route path="/tools/attendance" element={<AttendanceCalculator />} />
           <Route path="/tools/studyPlanner" element={<StudyPlanner />} />
           <Route path="/tools/coming-soon" element={<ComingSoon />} />
           <Route path="/tools/citationGenerator" element={<CitationGenerator />} />
