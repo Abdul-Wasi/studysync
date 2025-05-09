@@ -54,7 +54,7 @@ const CitationGenerator = () => {
         setError('Please fill in all fields for the book citation.');
         return;
       }
-      // Basic APA book citation format
+      // Basic APA book citation format.
       const generatedCitation = `${author}. (${year}). ${title}. ${city}: ${publisher}.`;
       setCitation(generatedCitation);
     } else if (citationType === 'article') {
