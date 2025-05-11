@@ -1,5 +1,6 @@
 // src/components/StudyPlanner.jsx
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/StudyPlanner.css';
 import {
   PlusCircle,
@@ -17,6 +18,7 @@ const StudyPlanner = () => {
   const [newTaskDescription, setNewTaskDescription] = useState('');
   const [newDueDate, setNewDueDate] = useState('');
   const [newDueTime, setNewDueTime] = useState('');
+  const [showSavePrompt, setShowSavePrompt] = useState(false);
 
   const [editIndex, setEditIndex] = useState(null);
   const [editTaskData, setEditTaskData] = useState({
@@ -38,6 +40,7 @@ const StudyPlanner = () => {
     };
 
     setTasks([...tasks, newTask]);
+    setShowSavePrompt(true);
     setNewTaskTitle('');
     setNewTaskDescription('');
     setNewDueDate('');
@@ -243,6 +246,12 @@ const StudyPlanner = () => {
           </div>
         ))}
       </div>
+      {showSavePrompt && (
+        <div className="save-prompt">
+          <p>Want to save your study plan for later?</p>
+          <Link to="/login">Login</Link> or <Link to="/signup">Sign Up</Link> to save your tasks!
+        </div>
+      )}
     </div>
   );
 };

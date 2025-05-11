@@ -357,3 +357,30 @@
     font-size: 1.2rem;
   }
 }
+
+
+/* ... other styles ... */
+
+.save-prompt {
+  background-color: var(--secondary-color); /* A subtle background */
+  color: var(--text-color);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.save-prompt p {
+  margin-bottom: 0.5rem;
+}
+
+.save-prompt a {
+  color: var(--primary-color);
+  font-weight: bold;
+  margin: 0 0.5rem;
+  text-decoration: none;
+}
+
+.save-prompt a:hover {
+  text-decoration: underline;
+}
