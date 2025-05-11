@@ -1,6 +1,6 @@
-//App.jsx
+// App.jsx
 
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import { ToastContainer } from "react-toastify";
 import Navbar from "./components/Navbar";
@@ -17,7 +17,7 @@ import ComingSoon from "./components/ComingSoon";
 import StudyPlanner from "./components/StudyPlanner";
 import CitationGenerator from './components/CitationGenerator';
 import BudgetingTool from './components/BudgetingTool';
-import { auth } from "./firebase"; // Assuming you've initialized Firebase auth
+import { auth } from "./firebase";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
