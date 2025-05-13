@@ -1,5 +1,6 @@
 // src/components/BudgetingTool.jsx
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; // Import Link
 import '../styles/BudgetingTool.css';
 
 const BudgetingTool = () => {
@@ -8,6 +9,7 @@ const BudgetingTool = () => {
   const [expenseName, setExpenseName] = useState('');
   const [expenseAmount, setExpenseAmount] = useState('');
   const [editingIndex, setEditingIndex] = useState(null);
+  const [showSavePrompt, setShowSavePrompt] = useState(false); // New state for save prompt
 
   const handleAddExpense = () => {
     if (expenseName && expenseAmount) {
@@ -18,6 +20,7 @@ const BudgetingTool = () => {
         setEditingIndex(null);
       } else {
         setExpenses([...expenses, { name: expenseName, amount: parseFloat(expenseAmount) }]);
+        setShowSavePrompt(true); // Show save prompt after adding expense
       }
       setExpenseName('');
       setExpenseAmount('');
@@ -124,6 +127,13 @@ const BudgetingTool = () => {
           </p>
         )}
       </div>
+
+      {showSavePrompt && (
+        <div className="save-prompt">
+          <p>Want to save your budget for later?</p>
+          <Link to="/login">Login</Link> or <Link to="/signup">Sign Up</Link> to save your budget!
+        </div>
+      )}
     </div>
   );
 };
