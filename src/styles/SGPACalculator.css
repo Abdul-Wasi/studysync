@@ -1,3 +1,5 @@
+/* src/styles/SGPACalculator.css */
+
 .sgpa-calculator {
   max-width: 800px;
   margin: auto;
@@ -26,6 +28,7 @@
 
 .dropdowns label {
   font-weight: 500;
+  color: var(--text-color);
 }
 
 .dropdowns select {
@@ -35,6 +38,7 @@
   border: 1px solid var(--card-border);
   background-color: var(--bg-color);
   color: var(--text-color);
+  font-family: var(--font-body);
 }
 
 .subjects {
@@ -56,6 +60,7 @@
   border-radius: var(--border-radius);
   background-color: var(--bg-color);
   color: var(--text-color);
+  font-family: var(--font-body);
 }
 
 .buttons {
@@ -89,4 +94,29 @@
   text-align: center;
   font-weight: 600;
   color: var(--text-color);
+}
+
+/* Save Prompt Style (consistent with others) */
+.save-prompt {
+  background-color: var(--secondary-color); /* A subtle background */
+  color: var(--text-color);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.save-prompt p {
+  margin-bottom: 0.5rem;
+}
+
+.save-prompt a {
+  color: var(--primary-color);
+  font-weight: bold;
+  margin: 0 0.5rem;
+  text-decoration: none;
+}
+
+.save-prompt a:hover {
+  text-decoration: underline;
 }

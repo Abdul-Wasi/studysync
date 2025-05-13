@@ -1,6 +1,7 @@
 // src/components/SGPACalculator.jsx
 
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom"; // Import Link
 import gradingScales from "../utils/gradingScales";
 import "../styles/SGPACalculator.css";
 
@@ -12,6 +13,7 @@ const SGPACalculator = () => {
     { name: "Sub 1", marks: "", grade: "", gradePoint: "", credit: "" },
   ]);
   const [sgpa, setSGPA] = useState(null);
+  const [showSavePrompt, setShowSavePrompt] = useState(false); // New state for save prompt
 
   useEffect(() => {
     let selectedScale;
@@ -77,6 +79,7 @@ const SGPACalculator = () => {
 
     const result = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : null;
     setSGPA(result);
+    setShowSavePrompt(true); // Show save prompt after calculation
   };
 
   return (
@@ -153,6 +156,13 @@ const SGPACalculator = () => {
       {sgpa && (
         <div className="result">
           ✅ <strong>Your SGPA is: {sgpa}</strong>
+        </div>
+      )}
+
+      {showSavePrompt && (
+        <div className="save-prompt">
+          <p>Want to save your SGPA calculation?</p>
+          <Link to="/login">Login</Link> or <Link to="/signup">Sign Up</Link> to save your result!
         </div>
       )}
     </div>
