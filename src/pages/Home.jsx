@@ -14,7 +14,7 @@ import {
 const Home = () => {
   return (
     <div className="home-container">
-      <h1 className="home-title">Welcome to UniTools 🚀</h1>
+      <h1 className="home-title">Welcome to StudySync 🚀</h1>
       <p className="home-subtitle">
         Your all-in-one academic companion — calculate, plan, analyze & connect.
       </p>

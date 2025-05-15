@@ -20,7 +20,7 @@ const Tools = () => {
           </Link>
 
           {/* SGPA Calculator */}
-          <Link to="/tools/sgpa" className="tool-card">
+          <Link to="/tools/sgpa-calculator" className="tool-card">
             <i className="fas fa-graduation-cap tool-icon"></i>
             <h3>SGPA Calculator</h3>
             <p>Easily compute your SGPA from your semester grades.</p>

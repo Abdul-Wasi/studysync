@@ -1,0 +1,64 @@
+/* src/styles/ProfilePage.css */
+
+.profile-page-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  color: var(--text-color);
+}
+
+.profile-page-container h2 {
+  font-family: var(--font-heading);
+  color: var(--primary-color);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.user-info {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 1.5rem;
+}
+
+.user-info p {
+  margin: 0.5rem 0;
+}
+
+.user-info strong {
+  font-weight: bold;
+}
+
+.saved-data-section {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.saved-data-section h3 {
+  font-family: var(--font-heading);
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+}
+
+.error-message {
+  color: var(--error-color);
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+/* Basic styling for preformatted JSON data */
+.saved-data-section pre {
+  white-space: pre-wrap; /* Allow text to wrap */
+  font-family: monospace;
+  background-color: #f4f4f4;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  overflow-x: auto; /* Handle potentially long data */
+}
