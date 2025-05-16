@@ -1,64 +1,211 @@
 /* src/styles/ProfilePage.css */
 
-.profile-page-container {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background-color: var(--card-bg);
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-  color: var(--text-color);
+.profile-container {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 2rem auto;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--card-border);
 }
 
-.profile-page-container h2 {
-  font-family: var(--font-heading);
-  color: var(--primary-color);
-  text-align: center;
-  margin-bottom: 1.5rem;
+.profile-container h2 {
+    font-size: 2.2rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    text-align: center;
 }
 
-.user-info {
-  background-color: var(--secondary-color);
-  color: var(--text-color);
-  padding: 1rem;
-  border-radius: var(--border-radius);
-  margin-bottom: 1.5rem;
+.profile-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-color);
+    padding: 1rem 1.5rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 2rem;
+    border: 1px solid var(--card-border);
 }
 
-.user-info p {
-  margin: 0.5rem 0;
+.profile-info p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--text-color);
 }
 
-.user-info strong {
-  font-weight: bold;
+.profile-info strong {
+    color: var(--text-dark);
 }
 
-.saved-data-section {
-  background-color: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: var(--border-radius);
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
+.logout-button {
+    background-color: #e74c3c; /* Red for logout */
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.saved-data-section h3 {
-  font-family: var(--font-heading);
-  color: var(--secondary-color);
-  margin-bottom: 1rem;
+.logout-button:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
 }
 
-.error-message {
-  color: var(--error-color);
-  font-weight: bold;
-  margin-top: 1rem;
+.profile-section {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
 }
 
-/* Basic styling for preformatted JSON data */
-.saved-data-section pre {
-  white-space: pre-wrap; /* Allow text to wrap */
-  font-family: monospace;
-  background-color: #f4f4f4;
-  padding: 1rem;
-  border-radius: var(--border-radius);
-  overflow-x: auto; /* Handle potentially long data */
+.profile-section h3 {
+    font-size: 1.8rem;
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.no-data-message {
+    text-align: center;
+    font-style: italic;
+    color: var(--text-light);
+    padding: 1.5rem;
+    border: 1px dashed var(--card-border);
+    border-radius: var(--border-radius);
+    background-color: var(--bg-color);
+}
+
+.no-data-message a {
+    color: var(--primary-color);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.no-data-message a:hover {
+    text-decoration: underline;
+}
+
+.loading-message {
+    text-align: center;
+    font-style: italic;
+    color: var(--primary-color);
+    padding: 2rem;
+}
+
+.data-card-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.data-card {
+    background-color: var(--bg-color);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--card-border);
+    transition: transform 0.2s ease;
+}
+
+.data-card:hover {
+    transform: translateY(-5px);
+}
+
+.data-card h4 {
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    margin-bottom: 0.75rem;
+}
+
+.data-card p {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.data-card ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0.75rem 0 0;
+}
+
+.data-card li {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 0.3rem;
+    padding-left: 1.2rem;
+    position: relative;
+}
+
+.data-card li::before {
+    content: '•';
+    color: var(--secondary-color);
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+/* Specific styles for different data cards */
+.study-task-card {
+    border-left: 4px solid var(--primary-color);
+}
+.study-task-card p:last-child {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.budgeting-summary-card {
+    border-left: 4px solid #3498db; /* Blue */
+    margin-bottom: 1.5rem; /* Give it some space */
+}
+.budgeting-summary-card h4 {
+    margin-top: 1rem;
+    color: #2980b9;
+}
+.budgeting-summary-card strong {
+    font-size: 1.2em;
+    color: var(--primary-color);
+}
+
+.sgpa-card {
+    border-left: 4px solid #2ecc71; /* Green */
+}
+.sgpa-card strong {
+    font-size: 1.2em;
+    color: var(--primary-color);
+}
+
+/* Responsive adjustments for profile sections */
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 1.5rem;
+        margin: 1rem auto;
+    }
+
+    .profile-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .profile-info p {
+        width: 100%;
+    }
+
+    .logout-button {
+        width: 100%;
+    }
+
+    .profile-section {
+        padding-top: 1rem;
+    }
+
+    .data-card-list {
+        grid-template-columns: 1fr; /* Stack cards on small screens */
+    }
 }

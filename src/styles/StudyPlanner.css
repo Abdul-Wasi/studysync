@@ -1,4 +1,5 @@
 /* src/styles/StudyPlanner.css */
+
 .study-planner-container {
   padding: 2rem;
   max-width: 1000px;
@@ -99,6 +100,23 @@
   flex-direction: column;
   gap: 1.5rem;
 }
+
+/* New: No Tasks Message */
+.no-tasks-message, .loading-message {
+  text-align: center;
+  font-style: italic;
+  color: var(--text-light);
+  padding: 2rem;
+  border: 1px dashed var(--card-border);
+  border-radius: var(--border-radius);
+  background-color: var(--card-bg);
+  margin-top: 2rem;
+}
+.loading-message {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
 
 .task-card {
   background-color: var(--card-bg);
@@ -206,7 +224,7 @@
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
-.save-button {
+.save-button { /* Applies to task-level save button */
   background-color: #2ecc71;
   color: white;
 }
@@ -358,29 +376,86 @@
   }
 }
 
-
-/* ... other styles ... */
-
+/* Save Prompt (for not logged-in users) */
 .save-prompt {
-  background-color: var(--secondary-color); /* A subtle background */
+  background-color: var(--card-bg); /* Use a card background for consistency */
+  border: 1px solid var(--card-border);
   color: var(--text-color);
-  padding: 1rem;
+  padding: 1.5rem;
   border-radius: var(--border-radius);
-  margin-top: 2rem;
+  margin-top: 2.5rem;
   text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 .save-prompt p {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
-.save-prompt a {
-  color: var(--primary-color);
+.save-prompt .prompt-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.save-prompt .prompt-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--secondary-color); /* Use secondary color for links */
   font-weight: bold;
-  margin: 0 0.5rem;
   text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--secondary-color);
+  border-radius: var(--border-radius);
+  transition: all 0.3s ease;
 }
 
-.save-prompt a:hover {
-  text-decoration: underline;
+.save-prompt .prompt-link:hover {
+  background-color: var(--secondary-color);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Save Changes Button (for logged-in users) */
+.save-changes-container {
+  text-align: center;
+  margin-top: 3rem;
+  padding: 1.5rem;
+  background-color: var(--bg-color); /* Lighter background */
+  border: 1px solid var(--card-border);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.save-changes-container p {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.save-data-button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1rem 2.5rem;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.save-data-button:hover {
+  background-color: #1e5c59; /* Slightly darker shade of primary-color */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
