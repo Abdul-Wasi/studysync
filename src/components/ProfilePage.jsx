@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { auth, db } from '../firebase';
 import { ref, onValue, off } from 'firebase/database';
 import { signOut } from 'firebase/auth';
-import { useNavigate, Link } from 'react-router-dom'; // <--- ADD LINK HERE
+import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import '../styles/ProfilePage.css';
 
@@ -11,8 +11,9 @@ const ProfilePage = () => {
     const [userEmail, setUserEmail] = useState('');
     const [studyPlannerData, setStudyPlannerData] = useState(null);
     const [budgetingToolData, setBudgetingToolData] = useState(null);
-    const [sgpaCalculatorData, setSgpaCalculatorData] = useState(null);
+    const [sgpaCalculatorData, setSgpaCalculatorData] = useState(null); // This will hold an array of semester objects
     const [loading, setLoading] = useState(true);
+    const [showCGPA, setShowCGPA] = useState(false); // New state for toggling CGPA display
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -21,12 +22,10 @@ const ProfilePage = () => {
                 setUserEmail(user.email);
                 const userRef = ref(db, `users/${user.uid}`);
 
-                // Listen for changes to the user's data
                 const unsubscribeDb = onValue(userRef, (snapshot) => {
                     const data = snapshot.val();
                     if (data) {
                         // Study Planner Data
-                        // Ensure it's an object/array, not a string
                         if (data.studyPlannerData && data.studyPlannerData.tasks) {
                             setStudyPlannerData(Object.values(data.studyPlannerData.tasks));
                         } else {
@@ -34,21 +33,29 @@ const ProfilePage = () => {
                         }
 
                         // Budgeting Tool Data
-                        // Ensure it's an object/array, not a string
                         if (data.budgetingData) {
-                            setBudgetingToolData(data.budgetingData);
+                            const loadedExpenses = data.budgetingData.expenses
+                                ? Object.values(data.budgetingData.expenses)
+                                : [];
+
+                            setBudgetingToolData({
+                                totalIncome: data.budgetingData.totalIncome || 0,
+                                expenses: loadedExpenses,
+                            });
                         } else {
                             setBudgetingToolData(null);
                         }
 
                         // SGPA Calculator Data
-                        if (data.sgpaData) {
-                            setSgpaCalculatorData(data.sgpaData);
+                        if (data.sgpaData && data.sgpaData.semesters) {
+                            const semestersArray = Object.values(data.sgpaData.semesters);
+                            // Sort by calculatedAt (oldest first) to ensure consistent order
+                            semestersArray.sort((a, b) => new Date(a.calculatedAt) - new Date(b.calculatedAt));
+                            setSgpaCalculatorData(semestersArray);
                         } else {
                             setSgpaCalculatorData(null);
                         }
                     } else {
-                        // Clear all data if no user data found
                         setStudyPlannerData(null);
                         setBudgetingToolData(null);
                         setSgpaCalculatorData(null);
@@ -61,7 +68,7 @@ const ProfilePage = () => {
                 });
 
                 return () => {
-                    off(userRef); // Detach the Realtime Database listener on unmount
+                    off(userRef);
                 };
 
             } else {
@@ -71,11 +78,11 @@ const ProfilePage = () => {
                 setSgpaCalculatorData(null);
                 setLoading(false);
                 toast.info("Please log in to view your profile.");
-                navigate('/login'); // Redirect to login if not authenticated
+                navigate('/login');
             }
         });
 
-        return () => unsubscribeAuth(); // Cleanup auth listener
+        return () => unsubscribeAuth();
     }, [navigate]);
 
     const handleLogout = async () => {
@@ -96,6 +103,38 @@ const ProfilePage = () => {
             </div>
         );
     }
+
+    const totalExpensesForBudgeting = budgetingToolData?.expenses?.reduce((sum, exp) => sum + exp.amount, 0) || 0;
+    const remainingBudget = (budgetingToolData?.totalIncome || 0) - totalExpensesForBudgeting;
+
+    // --- SGPA Calculations for display ---
+    const latestSgpaEntry = sgpaCalculatorData && sgpaCalculatorData.length > 0
+        ? sgpaCalculatorData[sgpaCalculatorData.length - 1] // Get the last element (most recent after sorting)
+        : null;
+
+    let totalCumulativeCredits = 0;
+    let totalCumulativeGradePointsSum = 0; // Sum of (SGPA * credits) for CGPA calculation
+    let totalSubjectsAcrossAllSemesters = 0;
+
+    if (sgpaCalculatorData && sgpaCalculatorData.length > 0) {
+        sgpaCalculatorData.forEach(sem => {
+            const sgpaValue = parseFloat(sem.sgpa);
+            const creditsValue = parseFloat(sem.credits);
+            const totalSubjectsInSem = parseInt(sem.totalSubjects, 10);
+
+            if (!isNaN(sgpaValue) && !isNaN(creditsValue)) {
+                totalCumulativeCredits += creditsValue;
+                totalCumulativeGradePointsSum += (sgpaValue * creditsValue);
+            }
+            if (!isNaN(totalSubjectsInSem)) {
+                totalSubjectsAcrossAllSemesters += totalSubjectsInSem;
+            }
+        });
+    }
+
+    const calculatedCGPA = totalCumulativeCredits > 0
+        ? (totalCumulativeGradePointsSum / totalCumulativeCredits).toFixed(2)
+        : null;
 
     return (
         <div className="profile-container">
@@ -128,24 +167,18 @@ const ProfilePage = () => {
                 <h3>Budgeting Tool</h3>
                 {budgetingToolData ? (
                     <div className="data-card budgeting-summary-card">
-                        <p><strong>Total Balance:</strong> ${budgetingToolData.totalBalance || 0}</p>
-                        <h4>Income:</h4>
-                        {budgetingToolData.income && budgetingToolData.income.length > 0 ? (
-                            <ul>
-                                {budgetingToolData.income.map((item, index) => (
-                                    <li key={item.id || index}>{item.description}: ${item.amount} ({item.date})</li>
-                                ))}
-                            </ul>
-                        ) : <p>No income recorded.</p>}
-
+                        <p><strong>Total Income:</strong> ₹{budgetingToolData.totalIncome?.toFixed(2) || '0.00'}</p>
                         <h4>Expenses:</h4>
                         {budgetingToolData.expenses && budgetingToolData.expenses.length > 0 ? (
                             <ul>
-                                {budgetingToolData.expenses.map((item, index) => (
-                                    <li key={item.id || index}>{item.description}: ${item.amount} ({item.date})</li>
+                                {budgetingToolData.expenses.map((item) => (
+                                    <li key={item.id}>{item.name}: ₹{item.amount?.toFixed(2)} ({item.date})</li>
                                 ))}
                             </ul>
                         ) : <p>No expenses recorded.</p>}
+                        <p className={`remaining-budget-display ${remainingBudget < 0 ? 'negative-budget' : 'positive-budget'}`}>
+                            <strong>Remaining Budget:</strong> ₹{remainingBudget.toFixed(2)}
+                        </p>
                     </div>
                 ) : (
                     <p className="no-data-message">No saved budgeting data found. <Link to="/tools/budgetingTool">Start managing your budget!</Link></p>
@@ -154,24 +187,62 @@ const ProfilePage = () => {
 
             <div className="profile-section">
                 <h3>SGPA Calculator</h3>
-                {sgpaCalculatorData ? (
+                {sgpaCalculatorData && sgpaCalculatorData.length > 0 ? (
                     <div className="data-card sgpa-card">
-                        <p><strong>Last Calculated SGPA:</strong> {sgpaCalculatorData.sgpa || 'N/A'}</p>
-                        {/* You can add more details here if your SGPA data structure supports it */}
-                        <p>Total Credits: {sgpaCalculatorData.totalCredits || 'N/A'}</p>
-                        <p>Total Grade Points: {sgpaCalculatorData.totalGradePoints || 'N/A'}</p>
-                        {sgpaCalculatorData.semesters && sgpaCalculatorData.semesters.length > 0 && (
-                            <>
-                                <h4>Saved Semesters:</h4>
-                                <ul>
-                                    {sgpaCalculatorData.semesters.map((sem, index) => (
-                                        <li key={sem.id || index}> {/* Added key for semester as well */}
-                                            Semester {sem.semesterNumber}: SGPA {sem.sgpa} (Credits: {sem.credits})
-                                        </li>
-                                    ))}
-                                </ul>
-                            </>
+                        {/* Last Calculated Details */}
+                        {latestSgpaEntry && (
+                            <div className="sgpa-summary-card">
+                                <h4>Last Calculated SGPA:</h4>
+                                <p><strong>Semester:</strong> {latestSgpaEntry.semesterNumber || 'N/A'}</p>
+                                <p><strong>SGPA:</strong> {latestSgpaEntry.sgpa || 'N/A'}</p>
+                                <p><strong>Credits:</strong> {latestSgpaEntry.credits || 'N/A'}</p>
+                                <p><strong>Calculated On:</strong> {new Date(latestSgpaEntry.calculatedAt).toLocaleDateString()}</p>
+                            </div>
                         )}
+
+                        {/* Show CGPA Button */}
+                        <button onClick={() => setShowCGPA(!showCGPA)} className="toggle-cgpa-button">
+                            {showCGPA ? 'Hide CGPA' : 'Show Cumulative Performance'}
+                        </button>
+
+                        {/* CGPA and Total Stats Display (Conditional) */}
+                        {showCGPA && (
+                            <div className="cgpa-details">
+                                <h4>Cumulative Performance:</h4>
+                                {calculatedCGPA !== null ? (
+                                    <p><strong>CGPA:</strong> {calculatedCGPA}</p>
+                                ) : (
+                                    <p>CGPA cannot be calculated (insufficient data).</p>
+                                )}
+                                <p><strong>Total Subjects:</strong> {totalSubjectsAcrossAllSemesters}</p>
+                                <p><strong>Total Cumulative Credits:</strong> {totalCumulativeCredits}</p>
+                            </div>
+                        )}
+
+                        {/* Saved Semesters List */}
+                        <h4>Saved Semesters:</h4>
+                        <ul className="semester-list">
+                            {/* Sorted by calculatedAt in useEffect, so it's already oldest first */}
+                            {sgpaCalculatorData.map((sem, index) => (
+                                <li key={sem.calculatedAt} className="semester-item">
+                                    <h5>
+                                        {sem.semesterNumber || `Semester ${index + 1}`}: SGPA {sem.sgpa}
+                                    </h5>
+                                    <p>Credits: {sem.credits} | Subjects: {sem.totalSubjects}</p>
+                                    <p>Calculated: {new Date(sem.calculatedAt).toLocaleDateString()}</p>
+                                    <details className="sgpa-subjects-toggle">
+                                        <summary>View Details</summary>
+                                        <ul className="sgpa-subjects-list">
+                                            {sem.subjects.map((sub, subIndex) => (
+                                                <li key={subIndex}>
+                                                    {sub.name}: {sub.grade} ({sub.credit} Cr)
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </details>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 ) : (
                     <p className="no-data-message">No saved SGPA data found. <Link to="/tools/sgpa-calculator">Calculate your SGPA!</Link></p>

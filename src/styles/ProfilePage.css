@@ -209,3 +209,153 @@
         grid-template-columns: 1fr; /* Stack cards on small screens */
     }
 }
+
+/* src/styles/ProfilePage.css */
+
+/* ... existing styles ... */
+
+.sgpa-subjects-list {
+    list-style-type: disc; /* Or none */
+    margin-top: 0.5rem;
+    margin-left: 1.5rem;
+    font-size: 0.9em;
+    color: var(--text-color-light); /* Lighter text for details */
+}
+
+.sgpa-subjects-list li {
+    margin-bottom: 0.2rem;
+}
+
+
+/* src/styles/ProfilePage.css */
+
+/* ... existing styles ... */
+
+.sgpa-summary-card {
+    background-color: var(--secondary-color);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+}
+
+.sgpa-summary-card h4 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.sgpa-summary-card p {
+    margin-bottom: 0.3rem;
+    font-size: 0.95rem;
+}
+
+
+.toggle-cgpa-button {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    display: block; /* Make it a block element to take full width */
+    width: fit-content; /* Or 100% depending on design */
+    margin-left: auto;
+    margin-right: auto;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-cgpa-button:hover {
+    background-color: #1f6b68;
+}
+
+.cgpa-details {
+    background-color: var(--card-bg-light); /* Lighter background for these details */
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    border: 1px solid var(--card-border);
+}
+
+.cgpa-details h4 {
+    color: var(--primary-color);
+    margin-bottom: 0.75rem;
+}
+
+.cgpa-details p {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.semester-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+}
+
+.semester-item {
+    background-color: var(--bg-color); /* Use a lighter background for individual items */
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+}
+
+.semester-item:hover {
+    transform: translateY(-2px);
+}
+
+.semester-item h5 {
+    color: var(--accent-color); /* Highlight semester name */
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.semester-item p {
+    font-size: 0.9rem;
+    color: var(--text-color-light);
+    margin-bottom: 0.3rem;
+}
+
+.sgpa-subjects-toggle {
+    margin-top: 0.75rem;
+    cursor: pointer;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.sgpa-subjects-toggle summary {
+    list-style: none; /* Hide default arrow */
+    position: relative;
+    padding-left: 1.5rem; /* Space for custom arrow */
+}
+
+.sgpa-subjects-toggle summary::before {
+    content: '▶'; /* Custom arrow */
+    position: absolute;
+    left: 0;
+    transform: rotate(0deg);
+    transition: transform 0.2s ease;
+}
+
+.sgpa-subjects-toggle[open] summary::before {
+    transform: rotate(90deg);
+}
+
+
+.sgpa-subjects-list {
+    list-style-type: none; /* Remove default bullets */
+    padding-left: 1rem; /* Indent subject list */
+    margin-top: 0.5rem;
+    border-left: 2px solid var(--primary-color); /* A visual separator */
+    padding-bottom: 0.5rem;
+}
+
+.sgpa-subjects-list li {
+    font-size: 0.85rem;
+    color: var(--text-color);
+    margin-bottom: 0.2rem;
+}

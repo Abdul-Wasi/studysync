@@ -120,3 +120,40 @@
 .save-prompt a:hover {
   text-decoration: underline;
 }
+
+
+
+/* src/styles/SGPACalculator.css */
+
+/* ... existing styles ... */
+
+.dropdowns .semester-name-input {
+    width: 100%;
+    padding: 0.6rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--card-border);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-body);
+}
+
+/* Add some margin if needed */
+.dropdowns label + .semester-name-input {
+    margin-top: 0.5rem; /* Adjust as needed */
+}
+
+/* Ensure save button has distinct style */
+.save-prompt .save-button {
+  background-color: var(--accent-color); /* Use an accent color for distinction */
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.save-prompt .save-button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
