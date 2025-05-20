@@ -22,7 +22,7 @@ import { auth } from "./firebase";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
-
+import FAQPage from './components/FAQPage';
 
 
 function App() {
@@ -47,6 +47,9 @@ function App() {
           <Route path="/tools/coming-soon" element={<ComingSoon />} />
           <Route path="/tools/citationGenerator" element={<CitationGenerator />} />
           <Route path="/tools/budgetingTool" element={<BudgetingTool />} />
+          <Route path="/faq" element={<FAQPage />} />
+
+
         </Routes>
       </div>
       <Footer />
