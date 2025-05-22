@@ -2,91 +2,113 @@
 
 
 .home-container {
-  padding: 3rem 2rem;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: var(--bg-color);
-  color: var(--text-color);
-  transition: background 0.4s ease, color 0.4s ease;
-  animation: fadeIn 0.8s ease-in-out both;
+    padding: 3rem 2rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--bg-color);
+    color: var(--text-color);
+    transition: background 0.4s ease, color 0.4s ease;
+    animation: fadeIn 0.8s ease-in-out both;
 }
 
 .home-title {
-  font-family: var(--font-heading);
-  font-size: 3rem;
-  font-weight: 700;
-  text-align: center;
-  background: linear-gradient(90deg, #278783, #32c2a3);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: popIn 1s ease-in-out;
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    font-weight: 700;
+    text-align: center;
+    background: linear-gradient(90deg, #278783, #32c2a3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: popIn 1s ease-in-out;
 }
 
 .home-subtitle {
-  font-family: var(--font-body);
-  font-size: 1.4rem;
-  margin-top: 0.5rem;
-  margin-bottom: 2rem;
-  text-align: center;
-  color: var(--text-light);
-  animation: fadeInUp 1s ease-in-out;
+    font-family: var(--font-body);
+    font-size: 1.4rem;
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: var(--text-light);
+    animation: fadeInUp 1s ease-in-out;
 }
 
 .home-features {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-  animation: fadeIn 1.5s ease-in-out;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    animation: fadeIn 1.5s ease-in-out;
 }
 
+/* Make the feature-card a link and style it accordingly */
 .feature-card {
-  background-color: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 16px;
-  padding: 2rem;
-  width: 280px;
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  font-family: var(--font-body);
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 2rem;
+    width: 280px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    font-family: var(--font-body);
+    text-decoration: none; /* Remove underline from Link */
+    color: var(--text-color); /* Ensure text color is inherited */
+    display: flex; /* Use flexbox for better alignment */
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
 }
 
 .feature-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-  border-color: var(--primary-color);
-  background: linear-gradient(to bottom right, #ffffff, #f0fdfa);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    border-color: var(--primary-color);
+    /* **UPDATED LINE HERE** */
+    background-color: var(--hover-bg); /* Use your general hover background for a subtle change */
+    /* Alternatively, if you want a subtle gradient within your theme: */
+    /* background: linear-gradient(to bottom right, var(--card-bg), color-mix(in srgb, var(--card-bg) 80%, var(--primary-color) 20%)); */
+}
+
+/* Ensure nested elements maintain their color and hover effects */
+.feature-card h3 {
+    color: inherit; /* Inherit color from the link */
+    transition: color 0.3s ease;
+}
+
+.feature-card:hover h3 {
+    color: var(--primary-color); /* Keeps the title within the primary theme color */
 }
 
 .feature-icon {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  color: var(--primary-color);
-  transition: transform 0.3s ease;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .feature-card:hover .feature-icon {
-  transform: rotate(8deg) scale(1.1);
+    transform: rotate(8deg) scale(1.1);
 }
 
 .feature-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-heading);
 }
 
 .feature-desc {
-  font-size: 1rem;
-  color: var(--text-light);
+    font-size: 1rem;
+    color: var(--text-light);
 }
 
-/* Animated Button */
+/* Animated Button (If you want to keep a separate "Explore All Tools" button) */
+/* This button was in your original CSS, but I'm commenting it out as direct links are preferred.
+   If you still want an "Explore All Tools" button, uncomment and style as needed.
 .explore-button {
   padding: 0.75rem 2rem;
   background: var(--primary-color);
@@ -121,6 +143,7 @@
 .explore-button:hover::before {
   left: 100%;
 }
+*/
 
 /* Animations */
 @keyframes fadeInDown {
@@ -165,4 +188,24 @@
     opacity: 1;
     transform: scale(1);
   }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .home-title {
+        font-size: 2.5rem;
+    }
+
+    .home-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .home-features {
+        gap: 1.5rem;
+    }
+
+    .feature-card {
+        width: 100%; /* Full width on small screens */
+        max-width: 320px; /* Max width for readability */
+    }
 }
