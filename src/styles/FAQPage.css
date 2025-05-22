@@ -1,0 +1,101 @@
+/* src/styles/FAQPage.css */
+
+.faq-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: var(--card-bg); /* Using your existing theme variables */
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.faq-container h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    color: var(--primary-color); /* Your primary color */
+    font-family: var(--font-heading);
+}
+
+.faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Space between FAQ items */
+}
+
+.faq-item {
+    border: 1px solid var(--card-border); /* Border for each FAQ item */
+    border-radius: var(--border-radius);
+    overflow: hidden; /* Ensures rounded corners apply to content during animation */
+    background-color: var(--bg-color); /* Slightly lighter background for items */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.faq-item:hover {
+    background-color: var(--hover-bg); /* Subtle hover effect */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15); /* Slight lift on hover */
+}
+
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.2rem;
+    cursor: pointer;
+    background-color: var(--secondary-color); /* Background for the question header */
+    color: var(--text-color);
+    font-family: var(--font-body);
+    /* Adding some styling for the question header itself */
+    border-bottom: 1px solid transparent; /* Prepare for border on open */
+    transition: background-color 0.3s ease, border-bottom-color 0.3s ease;
+}
+
+.faq-question h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color); /* Primary color for questions */
+    flex-grow: 1; /* Allows the question text to take available space */
+}
+
+.faq-icon {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--accent-color); /* Accent color for the icon */
+    margin-left: 1rem; /* Space between question and icon */
+    transition: transform 0.2s ease;
+}
+
+.faq-icon.open {
+    transform: rotate(180deg); /* Rotate the caret icon when the answer is open */
+}
+
+.faq-answer {
+    padding: 0 1.2rem; /* Initial padding: no vertical padding */
+    max-height: 0; /* Initially hidden */
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.4s ease-out; /* Smooth transition for height and padding */
+    box-sizing: border-box; /* Include padding in element's total width and height */
+    color: var(--text-color); /* Default text color for answers */
+}
+
+.faq-answer p {
+    margin: 0; /* Remove default paragraph margin */
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-color-light); /* Lighter text for answers */
+}
+
+.faq-answer.open {
+    max-height: 500px; /* Max height when open - adjust if answers are very long */
+    padding: 1rem 1.2rem; /* Add vertical padding when open */
+    border-top: 1px solid var(--card-border); /* Separator when open */
+}
+
+/* Optional: Focus/active states for accessibility and visual feedback */
+.faq-question:focus {
+    outline: 2px solid var(--primary-color); /* Outline for keyboard navigation */
+    outline-offset: -2px;
+}
