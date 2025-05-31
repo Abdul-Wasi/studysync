@@ -1,7 +1,7 @@
 // src/components/DiscussionList.jsx
 
 import React, { useState, useEffect } from 'react';
-import { realtimeDb } from '../firebase'; // <--- CORRECT: Import realtimeDb
+import { db } from '../firebase'; // <--- CORRECTED: Import 'db' which is your Realtime Database instance
 import { ref, onValue, off } from 'firebase/database';
 import { Link } from 'react-router-dom';
 import '../styles/DiscussionForum.css';
@@ -12,17 +12,22 @@ const DiscussionList = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const discussionsRef = ref(realtimeDb, 'discussions'); // <--- Use realtimeDb here
+    // Reference to the 'discussions' node in your Realtime Database
+    const discussionsRef = ref(db, 'discussions'); // <--- Use 'db' here
 
+    // Attach a listener to get real-time updates
     const unsubscribe = onValue(discussionsRef, (snapshot) => {
       const discussionsData = [];
       if (snapshot.exists()) {
         const data = snapshot.val();
+        // Realtime Database returns data as an object of objects,
+        // so we need to convert it to an array and sort it.
         const discussionKeys = Object.keys(data);
         const sortedKeys = discussionKeys.sort((a, b) => {
             const dateA = data[a].lastActivityAt || data[a].createdAt;
             const dateB = data[b].lastActivityAt || data[b].createdAt;
-            return new Date(dateB) - new Date(dateA);
+            // Assuming lastActivityAt/createdAt are stored as Firebase server timestamps or ISO strings
+            return new Date(dateB) - new Date(dateA); // Sort by most recent activity
         });
 
         sortedKeys.forEach(key => {
@@ -37,6 +42,7 @@ const DiscussionList = () => {
       setLoading(false);
     });
 
+    // Cleanup subscription on unmount
     return () => off(discussionsRef, 'value', unsubscribe);
   }, []);
 
@@ -72,7 +78,7 @@ const DiscussionList = () => {
                 <span>By: {discussion.authorName || 'Anonymous'}</span>
                 <span>
                   {discussion.lastActivityAt ?
-                    new Date(discussion.lastActivityAt).toLocaleString() :
+                    new Date(discussion.lastActivityAt).toLocaleString() : // Assuming stored as ISO string or timestamp number
                     (discussion.createdAt ? new Date(discussion.createdAt).toLocaleString() : 'N/A')
                   }
                 </span>

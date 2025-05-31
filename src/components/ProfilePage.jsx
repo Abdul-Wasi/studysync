@@ -1,6 +1,6 @@
 // src/components/ProfilePage.jsx
 import React, { useState, useEffect } from 'react';
-import { auth, realtimeDb } from '../firebase'; // <--- CORRECTED: Import realtimeDb here
+import { auth, db } from '../firebase'; // <--- This 'db' refers to Realtime Database based on firebase.js
 import { ref, onValue, off } from 'firebase/database';
 import { signOut } from 'firebase/auth';
 import { useNavigate, Link } from 'react-router-dom';
@@ -20,7 +20,7 @@ const ProfilePage = () => {
         const unsubscribeAuth = auth.onAuthStateChanged(user => {
             if (user) {
                 setUserEmail(user.email);
-                const userRef = ref(realtimeDb, `users/${user.uid}`); // <--- Use realtimeDb here
+                const userRef = ref(db, `users/${user.uid}`); // Using 'db' for Realtime Database
 
                 const unsubscribeDb = onValue(userRef, (snapshot) => {
                     const data = snapshot.val();
