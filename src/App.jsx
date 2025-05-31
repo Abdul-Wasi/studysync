@@ -27,6 +27,11 @@ import BudgetingTool from './components/BudgetingTool';
 import FAQPage from './components/FAQPage'; // Grouped with other specific components
 import ComingSoon from "./components/ComingSoon"; // Keep "ComingSoon" as it is
 
+// Forum Components (NEW IMPORTS)
+import DiscussionList from "./components/DiscussionList"; // Import DiscussionList
+// import NewDiscussionForm from "./components/NewDiscussionForm"; // Will add this later
+// import DiscussionDetail from "./components/DiscussionDetail"; // Will add this later
+
 // Firebase Import
 import { auth } from "./firebase"; // Keep Firebase import separate or with other utilities
 
@@ -62,6 +67,11 @@ function App() {
           <Route path="/tools/citationGenerator" element={<CitationGenerator />} />
           <Route path="/tools/budgetingTool" element={<BudgetingTool />} />
           <Route path="/tools/coming-soon" element={<ComingSoon />} /> {/* Coming Soon page */}
+
+          {/* Discussion Forum Routes (NEW ROUTES) */}
+          <Route path="/forum" element={<DiscussionList />} />
+          {/* <Route path="/forum/new" element={<NewDiscussionForm />} /> // Add when you create it */}
+          {/* <Route path="/forum/:discussionId" element={<DiscussionDetail />} /> // Add when you create it */}
 
         </Routes>
       </div>
