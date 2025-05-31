@@ -1,10 +1,10 @@
 // src/components/DiscussionList.jsx
 
 import React, { useState, useEffect } from 'react';
-import { db } from '../firebase'; // Import your Firestore instance
-import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
-import { Link } from 'react-router-dom'; // To link to individual discussion pages
-import '../styles/DiscussionForum.css'; // We'll create this CSS file next
+import { realtimeDb } from '../firebase'; // <--- CORRECT: Import realtimeDb
+import { ref, onValue, off } from 'firebase/database';
+import { Link } from 'react-router-dom';
+import '../styles/DiscussionForum.css';
 
 const DiscussionList = () => {
   const [discussions, setDiscussions] = useState([]);
@@ -12,24 +12,33 @@ const DiscussionList = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const q = query(collection(db, 'discussions'), orderBy('lastActivityAt', 'desc'));
+    const discussionsRef = ref(realtimeDb, 'discussions'); // <--- Use realtimeDb here
 
-    const unsubscribe = onSnapshot(q, (snapshot) => {
+    const unsubscribe = onValue(discussionsRef, (snapshot) => {
       const discussionsData = [];
-      snapshot.forEach((doc) => {
-        discussionsData.push({ id: doc.id, ...doc.data() });
-      });
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        const discussionKeys = Object.keys(data);
+        const sortedKeys = discussionKeys.sort((a, b) => {
+            const dateA = data[a].lastActivityAt || data[a].createdAt;
+            const dateB = data[b].lastActivityAt || data[b].createdAt;
+            return new Date(dateB) - new Date(dateA);
+        });
+
+        sortedKeys.forEach(key => {
+            discussionsData.push({ id: key, ...data[key] });
+        });
+      }
       setDiscussions(discussionsData);
       setLoading(false);
     }, (err) => {
-      console.error("Error fetching discussions:", err);
+      console.error("Error fetching discussions from Realtime Database:", err);
       setError("Failed to load discussions. Please try again later.");
       setLoading(false);
     });
 
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
-  }, []); // Empty dependency array means this runs once on mount
+    return () => off(discussionsRef, 'value', unsubscribe);
+  }, []);
 
   if (loading) {
     return <div className="forum-container loading">Loading discussions...</div>;
@@ -63,8 +72,8 @@ const DiscussionList = () => {
                 <span>By: {discussion.authorName || 'Anonymous'}</span>
                 <span>
                   {discussion.lastActivityAt ?
-                    new Date(discussion.lastActivityAt.toDate()).toLocaleString() : // Convert Firestore Timestamp to Date
-                    (discussion.createdAt ? new Date(discussion.createdAt.toDate()).toLocaleString() : 'N/A')
+                    new Date(discussion.lastActivityAt).toLocaleString() :
+                    (discussion.createdAt ? new Date(discussion.createdAt).toLocaleString() : 'N/A')
                   }
                 </span>
                 <span>Replies: {discussion.replyCount || 0}</span>

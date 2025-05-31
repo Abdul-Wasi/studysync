@@ -2,8 +2,8 @@
 
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-// Import Realtime Database functions
-import { getDatabase, ref, set, onValue, off, remove, push } from "firebase/database"; // <--- ADD THIS LINE
+import { getFirestore } from "firebase/firestore"; // Still importing Firestore in case needed elsewhere
+import { getDatabase } from "firebase/database"; // Import Realtime Database functions
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -12,11 +12,17 @@ const firebaseConfig = {
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL, // <--- IMPORTANT: Ensure this is present and correct!
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
 };
 
+// Initialize Firebase App
 const app = initializeApp(firebaseConfig);
 
+// Initialize Firebase Auth
 export const auth = getAuth(app);
-// Initialize Realtime Database
-export const db = getDatabase(app);
+
+// Initialize Firebase Firestore (kept for potential future use or if other tools use it)
+export const firestoreDb = getFirestore(app);
+
+// Initialize Firebase Realtime Database
+export const realtimeDb = getDatabase(app); // This is what ProfilePage and Discussion will use

@@ -1,6 +1,6 @@
 // src/components/ProfilePage.jsx
 import React, { useState, useEffect } from 'react';
-import { auth, db } from '../firebase';
+import { auth, realtimeDb } from '../firebase'; // <--- CORRECTED: Import realtimeDb here
 import { ref, onValue, off } from 'firebase/database';
 import { signOut } from 'firebase/auth';
 import { useNavigate, Link } from 'react-router-dom';
@@ -11,16 +11,16 @@ const ProfilePage = () => {
     const [userEmail, setUserEmail] = useState('');
     const [studyPlannerData, setStudyPlannerData] = useState(null);
     const [budgetingToolData, setBudgetingToolData] = useState(null);
-    const [sgpaCalculatorData, setSgpaCalculatorData] = useState(null); // This will hold an array of semester objects
+    const [sgpaCalculatorData, setSgpaCalculatorData] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [showCGPA, setShowCGPA] = useState(false); // New state for toggling CGPA display
+    const [showCGPA, setShowCGPA] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         const unsubscribeAuth = auth.onAuthStateChanged(user => {
             if (user) {
                 setUserEmail(user.email);
-                const userRef = ref(db, `users/${user.uid}`);
+                const userRef = ref(realtimeDb, `users/${user.uid}`); // <--- Use realtimeDb here
 
                 const unsubscribeDb = onValue(userRef, (snapshot) => {
                     const data = snapshot.val();
@@ -109,11 +109,11 @@ const ProfilePage = () => {
 
     // --- SGPA Calculations for display ---
     const latestSgpaEntry = sgpaCalculatorData && sgpaCalculatorData.length > 0
-        ? sgpaCalculatorData[sgpaCalculatorData.length - 1] // Get the last element (most recent after sorting)
+        ? sgpaCalculatorData[sgpaCalculatorData.length - 1]
         : null;
 
     let totalCumulativeCredits = 0;
-    let totalCumulativeGradePointsSum = 0; // Sum of (SGPA * credits) for CGPA calculation
+    let totalCumulativeGradePointsSum = 0;
     let totalSubjectsAcrossAllSemesters = 0;
 
     if (sgpaCalculatorData && sgpaCalculatorData.length > 0) {
@@ -189,7 +189,6 @@ const ProfilePage = () => {
                 <h3>SGPA Calculator</h3>
                 {sgpaCalculatorData && sgpaCalculatorData.length > 0 ? (
                     <div className="data-card sgpa-card">
-                        {/* Last Calculated Details */}
                         {latestSgpaEntry && (
                             <div className="sgpa-summary-card">
                                 <h4>Last Calculated SGPA:</h4>
@@ -200,12 +199,10 @@ const ProfilePage = () => {
                             </div>
                         )}
 
-                        {/* Show CGPA Button */}
                         <button onClick={() => setShowCGPA(!showCGPA)} className="toggle-cgpa-button">
-                            {showCGPA ? 'Hide CGPA' : 'Show Cumulative Performance'}
+                            {showCGPA ? 'Hide Cumulative Performance' : 'Show Cumulative Performance'}
                         </button>
 
-                        {/* CGPA and Total Stats Display (Conditional) */}
                         {showCGPA && (
                             <div className="cgpa-details">
                                 <h4>Cumulative Performance:</h4>
@@ -219,10 +216,8 @@ const ProfilePage = () => {
                             </div>
                         )}
 
-                        {/* Saved Semesters List */}
                         <h4>Saved Semesters:</h4>
                         <ul className="semester-list">
-                            {/* Sorted by calculatedAt in useEffect, so it's already oldest first */}
                             {sgpaCalculatorData.map((sem, index) => (
                                 <li key={sem.calculatedAt} className="semester-item">
                                     <h5>
@@ -253,5 +248,3 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
-
-//profilepage
