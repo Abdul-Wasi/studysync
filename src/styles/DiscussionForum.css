@@ -241,3 +241,180 @@
 .submit-discussion-btn:active {
   transform: translateY(0);
 }
+
+/* src/styles/DiscussionForum.css (add these or adapt existing styles) */
+
+.discussion-detail-card {
+  background-color: var(--card-bg-color);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-medium);
+  margin-bottom: 25px;
+  color: var(--text-color);
+}
+
+.discussion-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.discussion-detail-header h2 {
+  color: var(--primary-color);
+  margin-bottom: 0;
+  font-size: 1.8rem;
+  flex-grow: 1; /* Allow title to take available space */
+  word-break: break-word; /* Prevent long words from overflowing */
+}
+
+.detail-category {
+  background-color: var(--accent-color);
+  color: var(--text-color-light); /* Or white */
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-left: 15px;
+  white-space: nowrap; /* Keep category on one line */
+}
+
+.discussion-detail-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-color-secondary);
+  margin-bottom: 20px;
+  white-space: pre-wrap; /* Preserve whitespace and line breaks */
+  word-wrap: break-word; /* Prevent overflow */
+}
+
+.discussion-detail-meta {
+  font-size: 0.9rem;
+  color: var(--text-color-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px; /* Space between meta items */
+}
+
+.replies-section {
+  background-color: var(--card-bg-color);
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-small);
+  color: var(--text-color);
+}
+
+.replies-section h3 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.replies-list {
+  margin-bottom: 30px;
+}
+
+.reply-card {
+  background-color: var(--bg-color); /* Lighter background for replies */
+  padding: 15px 20px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  box-shadow: var(--shadow-tiny);
+}
+
+.reply-card:last-child {
+  margin-bottom: 0;
+}
+
+.reply-content {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text-color);
+  margin-bottom: 10px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.reply-meta {
+  font-size: 0.85rem;
+  color: var(--text-color-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  border-top: 1px dashed var(--border-color-light);
+  padding-top: 8px;
+  margin-top: 8px;
+}
+
+.reply-form {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.reply-form h4 {
+  color: var(--text-color);
+  margin-bottom: 15px;
+}
+
+.reply-form textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: var(--input-bg-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 80px;
+  margin-bottom: 15px;
+}
+
+.reply-form textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.2);
+}
+
+.post-reply-btn {
+  padding: 10px 20px;
+  background-color: var(--primary-button-bg);
+  color: var(--primary-button-text);
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.post-reply-btn:hover {
+  background-color: var(--primary-button-hover-bg);
+  transform: translateY(-2px);
+}
+
+.post-reply-btn:active {
+  transform: translateY(0);
+}
+
+.no-replies-msg,
+.login-to-reply-msg,
+.no-data-message {
+    text-align: center;
+    font-style: italic;
+    color: var(--text-color-muted);
+    padding: 20px;
+}
+
+.login-to-reply-msg a {
+    color: var(--link-color);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.login-to-reply-msg a:hover {
+    text-decoration: underline;
+}

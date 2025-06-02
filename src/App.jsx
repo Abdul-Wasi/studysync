@@ -30,7 +30,7 @@ import ComingSoon from "./components/ComingSoon"; // Keep "ComingSoon" as it is
 // Forum Components
 import DiscussionList from "./components/DiscussionList";
 import NewDiscussionForm from "./components/NewDiscussionForm";
-// import DiscussionDetail from "./components/DiscussionDetail"; // Will add this later
+import DiscussionDetail from "./components/DiscussionDetail";
 
 // Firebase Import
 import { auth } from "./firebase"; // Keep Firebase import separate or with other utilities
@@ -51,7 +51,7 @@ function App() {
       <div className="main-container">
         <Routes>
           {/* Core Pages */}
-          <Route path="/" element={<NewDiscussionForm />} />
+          <Route path="/" element={<DiscussionList />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/profile" element={<ProfilePage />} />
@@ -70,8 +70,8 @@ function App() {
 
           {/* Discussion Forum Routes */}
           <Route path="/forum" element={<DiscussionList />} />
-          <Route path="/forum/new" element={<NewDiscussionForm />} /> // Add when you create it
-          {/* <Route path="/forum/:discussionId" element={<DiscussionDetail />} /> // Add when you create it */}
+          <Route path="/forum/new" element={<NewDiscussionForm />} />
+          <Route path="/forum/:discussionId" element={<DiscussionDetail />} />
 
         </Routes>
       </div>
