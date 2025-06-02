@@ -1,7 +1,7 @@
 // src/components/ProfilePage.jsx
 import React, { useState, useEffect } from 'react';
-import { auth, db } from '../firebase'; // <--- This 'db' refers to Realtime Database based on firebase.js
-import { ref, onValue, off } from 'firebase/database';
+import { auth, db } from '../firebase';
+import { ref, onValue, off, update } from 'firebase/database'; // <--- Import 'update'
 import { signOut } from 'firebase/auth';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -9,6 +9,10 @@ import '../styles/ProfilePage.css';
 
 const ProfilePage = () => {
     const [userEmail, setUserEmail] = useState('');
+    const [userDisplayName, setUserDisplayName] = useState(''); // <--- New state for display name
+    const [editingDisplayName, setEditingDisplayName] = useState(false); // <--- New state for editing mode
+    const [newDisplayName, setNewDisplayName] = useState(''); // <--- New state for input field value
+
     const [studyPlannerData, setStudyPlannerData] = useState(null);
     const [budgetingToolData, setBudgetingToolData] = useState(null);
     const [sgpaCalculatorData, setSgpaCalculatorData] = useState(null);
@@ -20,11 +24,14 @@ const ProfilePage = () => {
         const unsubscribeAuth = auth.onAuthStateChanged(user => {
             if (user) {
                 setUserEmail(user.email);
-                const userRef = ref(db, `users/${user.uid}`); // Using 'db' for Realtime Database
+                const userRef = ref(db, `users/${user.uid}`);
 
                 const unsubscribeDb = onValue(userRef, (snapshot) => {
                     const data = snapshot.val();
                     if (data) {
+                        setUserDisplayName(data.displayName || 'N/A'); // <--- Set display name
+                        setNewDisplayName(data.displayName || ''); // Initialize input with current display name
+
                         // Study Planner Data
                         if (data.studyPlannerData && data.studyPlannerData.tasks) {
                             setStudyPlannerData(Object.values(data.studyPlannerData.tasks));
@@ -49,13 +56,15 @@ const ProfilePage = () => {
                         // SGPA Calculator Data
                         if (data.sgpaData && data.sgpaData.semesters) {
                             const semestersArray = Object.values(data.sgpaData.semesters);
-                            // Sort by calculatedAt (oldest first) to ensure consistent order
                             semestersArray.sort((a, b) => new Date(a.calculatedAt) - new Date(b.calculatedAt));
                             setSgpaCalculatorData(semestersArray);
                         } else {
                             setSgpaCalculatorData(null);
                         }
                     } else {
+                        // If no user data found (e.g., old user without displayName)
+                        setUserDisplayName('N/A');
+                        setNewDisplayName(''); // Set input as empty
                         setStudyPlannerData(null);
                         setBudgetingToolData(null);
                         setSgpaCalculatorData(null);
@@ -68,11 +77,13 @@ const ProfilePage = () => {
                 });
 
                 return () => {
-                    off(userRef);
+                    off(userRef); // Clean up Realtime DB listener
                 };
 
             } else {
                 setUserEmail('');
+                setUserDisplayName('');
+                setNewDisplayName('');
                 setStudyPlannerData(null);
                 setBudgetingToolData(null);
                 setSgpaCalculatorData(null);
@@ -82,7 +93,7 @@ const ProfilePage = () => {
             }
         });
 
-        return () => unsubscribeAuth();
+        return () => unsubscribeAuth(); // Clean up Auth listener
     }, [navigate]);
 
     const handleLogout = async () => {
@@ -96,6 +107,31 @@ const ProfilePage = () => {
         }
     };
 
+    const handleUpdateDisplayName = async () => {
+        if (!newDisplayName.trim()) {
+            toast.error("Display Name cannot be empty.");
+            return;
+        }
+
+        if (!auth.currentUser) {
+            toast.error("You must be logged in to update your profile.");
+            navigate('/login');
+            return;
+        }
+
+        try {
+            const userRef = ref(db, `users/${auth.currentUser.uid}`);
+            await update(userRef, { displayName: newDisplayName.trim() }); // <--- Use 'update'
+            setUserDisplayName(newDisplayName.trim()); // Update local state
+            setEditingDisplayName(false); // Exit editing mode
+            toast.success("Display Name updated successfully!");
+        } catch (error) {
+            console.error("Error updating display name:", error);
+            toast.error("Failed to update display name. Please try again.");
+        }
+    };
+
+
     if (loading) {
         return (
             <div className="profile-container">
@@ -106,11 +142,6 @@ const ProfilePage = () => {
 
     const totalExpensesForBudgeting = budgetingToolData?.expenses?.reduce((sum, exp) => sum + exp.amount, 0) || 0;
     const remainingBudget = (budgetingToolData?.totalIncome || 0) - totalExpensesForBudgeting;
-
-    // --- SGPA Calculations for display ---
-    const latestSgpaEntry = sgpaCalculatorData && sgpaCalculatorData.length > 0
-        ? sgpaCalculatorData[sgpaCalculatorData.length - 1]
-        : null;
 
     let totalCumulativeCredits = 0;
     let totalCumulativeGradePointsSum = 0;
@@ -141,11 +172,35 @@ const ProfilePage = () => {
             <h2>Your Profile</h2>
             <div className="profile-info">
                 <p><strong>Email:</strong> {userEmail}</p>
+
+                <div className="display-name-section"> {/* New section for display name */}
+                    <strong>Display Name:</strong>
+                    {editingDisplayName ? (
+                        <div className="edit-display-name-group">
+                            <input
+                                type="text"
+                                value={newDisplayName}
+                                onChange={(e) => setNewDisplayName(e.target.value)}
+                                placeholder="Enter new display name"
+                                className="display-name-input"
+                            />
+                            <button onClick={handleUpdateDisplayName} className="save-display-name-btn">Save</button>
+                            <button onClick={() => { setEditingDisplayName(false); setNewDisplayName(userDisplayName); }} className="cancel-display-name-btn">Cancel</button>
+                        </div>
+                    ) : (
+                        <div className="view-display-name-group">
+                            <span> {userDisplayName}</span>
+                            <button onClick={() => setEditingDisplayName(true)} className="edit-display-name-btn">Edit</button>
+                        </div>
+                    )}
+                </div>
+
                 <button onClick={handleLogout} className="logout-button">Log Out</button>
             </div>
 
             <div className="profile-section">
                 <h3>Study Planner</h3>
+                {/* ... existing Study Planner data display ... */}
                 {studyPlannerData && studyPlannerData.length > 0 ? (
                     <div className="data-card-list">
                         {studyPlannerData.map((task, index) => (
@@ -165,6 +220,7 @@ const ProfilePage = () => {
 
             <div className="profile-section">
                 <h3>Budgeting Tool</h3>
+                {/* ... existing Budgeting Tool data display ... */}
                 {budgetingToolData ? (
                     <div className="data-card budgeting-summary-card">
                         <p><strong>Total Income:</strong> ₹{budgetingToolData.totalIncome?.toFixed(2) || '0.00'}</p>
@@ -187,15 +243,16 @@ const ProfilePage = () => {
 
             <div className="profile-section">
                 <h3>SGPA Calculator</h3>
+                {/* ... existing SGPA Calculator data display ... */}
                 {sgpaCalculatorData && sgpaCalculatorData.length > 0 ? (
                     <div className="data-card sgpa-card">
-                        {latestSgpaEntry && (
+                        {sgpaCalculatorData.length > 0 && (
                             <div className="sgpa-summary-card">
                                 <h4>Last Calculated SGPA:</h4>
-                                <p><strong>Semester:</strong> {latestSgpaEntry.semesterNumber || 'N/A'}</p>
-                                <p><strong>SGPA:</strong> {latestSgpaEntry.sgpa || 'N/A'}</p>
-                                <p><strong>Credits:</strong> {latestSgpaEntry.credits || 'N/A'}</p>
-                                <p><strong>Calculated On:</strong> {new Date(latestSgpaEntry.calculatedAt).toLocaleDateString()}</p>
+                                <p><strong>Semester:</strong> {sgpaCalculatorData[sgpaCalculatorData.length - 1].semesterNumber || 'N/A'}</p>
+                                <p><strong>SGPA:</strong> {sgpaCalculatorData[sgpaCalculatorData.length - 1].sgpa || 'N/A'}</p>
+                                <p><strong>Credits:</strong> {sgpaCalculatorData[sgpaCalculatorData.length - 1].credits || 'N/A'}</p>
+                                <p><strong>Calculated On:</strong> {new Date(sgpaCalculatorData[sgpaCalculatorData.length - 1].calculatedAt).toLocaleDateString()}</p>
                             </div>
                         )}
 
