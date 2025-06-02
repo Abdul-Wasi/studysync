@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { db, auth } from '../firebase'; // Import 'db' for Realtime Database and 'auth' for user info
-import { set, ref, onValue, off, push, serverTimestamp, update } from 'firebase/database'; // Import Realtime DB functions
+import { set, ref, onValue, off, push, serverTimestamp, update, get } from 'firebase/database'; // <--- ADD 'get' here
 import { toast } from 'react-toastify';
 import '../styles/DiscussionForum.css'; // Reuse existing styles
 
@@ -113,6 +113,17 @@ const DiscussionDetail = () => {
     }
 
     try {
+      // Fetch the user's display name for the reply
+      let replyAuthorName = user.email; // Fallback to email
+      const userRef = ref(db, `users/${user.uid}`);
+      const snapshot = await get(userRef); // Use 'get' to fetch data once
+      if (snapshot.exists()) {
+        const userData = snapshot.val();
+        if (userData.displayName) {
+          replyAuthorName = userData.displayName; // Use display name if available
+        }
+      }
+
       const newReplyRef = push(ref(db, `discussions/${discussionId}/replies`)); // Push to replies sub-node
       const replyId = newReplyRef.key;
 
@@ -120,7 +131,7 @@ const DiscussionDetail = () => {
         id: replyId,
         content: replyContent.trim(),
         authorId: user.uid,
-        authorName: user.email, // Or user.displayName
+        authorName: replyAuthorName, // <--- Use the fetched display name for replies
         createdAt: serverTimestamp(),
       };
 
@@ -162,7 +173,7 @@ const DiscussionDetail = () => {
         </div>
         <p className="discussion-detail-description">{discussion.description}</p>
         <div className="discussion-detail-meta">
-          <span>Posted by: {discussion.authorName || 'Anonymous'}</span>
+          <span>Posted by: **{discussion.authorName || 'Anonymous'}**</span> {/* <--- Display authorName for main post */}
           <span>
             on: {discussion.createdAt && new Date(discussion.createdAt?.val || discussion.createdAt).toLocaleString()}
           </span>
@@ -180,7 +191,7 @@ const DiscussionDetail = () => {
               <div key={reply.id} className="reply-card">
                 <p className="reply-content">{reply.content}</p>
                 <div className="reply-meta">
-                  <span>By: {reply.authorName || 'Anonymous'}</span>
+                  <span>By: **{reply.authorName || 'Anonymous'}**</span> {/* <--- Display authorName for replies */}
                   <span>On: {reply.createdAt && new Date(reply.createdAt?.val || reply.createdAt).toLocaleString()}</span>
                 </div>
               </div>

@@ -1,10 +1,11 @@
 /* src/styles/DiscussionForum.css */
+/* This file remains as you provided it, as the variable definitions are now in index.css */
 
 .forum-container {
     max-width: 900px;
     margin: 2rem auto;
     padding: 2rem;
-    background-color: var(--card-bg);
+    background-color: var(--card-bg); /* Uses --card-bg from index.css */
     border-radius: var(--border-radius);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     color: var(--text-color);
@@ -51,20 +52,20 @@
 }
 
 .discussion-card {
-    background-color: var(--bg-color);
+    background-color: var(--bg-color); /* Uses --bg-color from index.css */
     border: 1px solid var(--card-border);
     border-radius: var(--border-radius);
     padding: 1.5rem;
-    text-decoration: none; /* Remove link underline */
-    color: inherit; /* Inherit text color */
+    text-decoration: none;
+    color: inherit;
     transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-    display: block; /* Make the entire card clickable */
+    display: block;
 }
 
 .discussion-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-    background-color: var(--hover-bg);
+    background-color: var(--hover-bg); /* Uses --hover-bg from index.css */
 }
 
 .discussion-card-header {
@@ -90,12 +91,12 @@
     font-size: 0.8rem;
     font-weight: 500;
     margin-left: 1rem;
-    white-space: nowrap; /* Prevents wrapping */
+    white-space: nowrap;
 }
 
 .discussion-snippet {
     font-size: 0.95rem;
-    color: var(--text-color-light);
+    color: var(--text-light); /* Uses --text-light from index.css */
     margin-bottom: 1rem;
     line-height: 1.5;
 }
@@ -166,238 +167,236 @@
     }
 }
 
-/* src/styles/DiscussionForum.css (add these or adapt existing styles) */
-
+/* New Discussion Form Styles */
 .new-discussion-form-card {
-  background-color: var(--card-bg-color); /* Use your theme variables */
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: var(--shadow-small);
-  max-width: 600px;
-  margin: 30px auto; /* Center the form */
+    background-color: var(--card-bg-color); /* Now defined in index.css */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: var(--shadow-small); /* Now defined in index.css */
+    max-width: 600px;
+    margin: 30px auto;
 }
 
 .new-discussion-form-card h2 {
-  text-align: center;
-  color: var(--text-color);
-  margin-bottom: 25px;
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 25px;
 }
 
 .form-group {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-  color: var(--text-color-secondary);
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--text-color-secondary); /* Now defined in index.css */
 }
 
 .form-group input[type="text"],
 .form-group textarea,
 .form-group select {
-  width: 100%;
-  padding: 12px 15px;
-  border: 1px solid var(--border-color);
-  border-radius: 5px;
-  background-color: var(--input-bg-color);
-  color: var(--text-color);
-  font-size: 1rem;
-  box-sizing: border-box; /* Include padding in width */
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color); /* Now defined in index.css */
+    border-radius: 5px;
+    background-color: var(--input-bg-color); /* Now defined in index.css */
+    color: var(--text-color);
+    font-size: 1rem;
+    box-sizing: border-box;
 }
 
 .form-group textarea {
-  resize: vertical; /* Allow vertical resizing */
-  min-height: 100px;
+    resize: vertical;
+    min-height: 100px;
 }
 
 .form-group input[type="text"]:focus,
 .form-group textarea:focus,
 .form-group select:focus {
-  outline: none;
-  border-color: var(--accent-color); /* Highlight on focus */
-  box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.2);
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.2); /* Now defined in index.css */
 }
 
 .submit-discussion-btn {
-  width: 100%;
-  padding: 12px;
-  background-color: var(--primary-button-bg); /* Your primary button color */
-  color: var(--primary-button-text);
-  border: none;
-  border-radius: 5px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary-button-bg); /* Now defined in index.css */
+    color: var(--primary-button-text); /* Now defined in index.css */
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .submit-discussion-btn:hover {
-  background-color: var(--primary-button-hover-bg); /* Darker shade on hover */
-  transform: translateY(-2px);
+    background-color: var(--primary-button-hover-bg); /* Now defined in index.css */
+    transform: translateY(-2px);
 }
 
 .submit-discussion-btn:active {
-  transform: translateY(0);
+    transform: translateY(0);
 }
 
-/* src/styles/DiscussionForum.css (add these or adapt existing styles) */
-
+/* Discussion Detail Page Styles */
 .discussion-detail-card {
-  background-color: var(--card-bg-color);
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: var(--shadow-medium);
-  margin-bottom: 25px;
-  color: var(--text-color);
+    background-color: var(--card-bg-color); /* Now defined in index.css */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: var(--shadow-medium); /* Now defined in index.css */
+    margin-bottom: 25px;
+    color: var(--text-color);
 }
 
 .discussion-detail-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
 }
 
 .discussion-detail-header h2 {
-  color: var(--primary-color);
-  margin-bottom: 0;
-  font-size: 1.8rem;
-  flex-grow: 1; /* Allow title to take available space */
-  word-break: break-word; /* Prevent long words from overflowing */
+    color: var(--primary-color);
+    margin-bottom: 0;
+    font-size: 1.8rem;
+    flex-grow: 1;
+    word-break: break-word;
 }
 
 .detail-category {
-  background-color: var(--accent-color);
-  color: var(--text-color-light); /* Or white */
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: bold;
-  margin-left: 15px;
-  white-space: nowrap; /* Keep category on one line */
+    background-color: var(--accent-color);
+    color: var(--text-color-light); /* Assuming you want light text on accent color */
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-left: 15px;
+    white-space: nowrap;
 }
 
 .discussion-detail-description {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: var(--text-color-secondary);
-  margin-bottom: 20px;
-  white-space: pre-wrap; /* Preserve whitespace and line breaks */
-  word-wrap: break-word; /* Prevent overflow */
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-color-secondary); /* Now defined in index.css */
+    margin-bottom: 20px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 .discussion-detail-meta {
-  font-size: 0.9rem;
-  color: var(--text-color-muted);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px; /* Space between meta items */
+    font-size: 0.9rem;
+    color: var(--text-color-muted); /* Now defined in index.css */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 .replies-section {
-  background-color: var(--card-bg-color);
-  padding: 25px;
-  border-radius: 8px;
-  box-shadow: var(--shadow-small);
-  color: var(--text-color);
+    background-color: var(--card-bg-color); /* Now defined in index.css */
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: var(--shadow-small); /* Now defined in index.css */
+    color: var(--text-color);
 }
 
 .replies-section h3 {
-  color: var(--primary-color);
-  margin-bottom: 20px;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 10px;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color); /* Now defined in index.css */
+    padding-bottom: 10px;
 }
 
 .replies-list {
-  margin-bottom: 30px;
+    margin-bottom: 30px;
 }
 
 .reply-card {
-  background-color: var(--bg-color); /* Lighter background for replies */
-  padding: 15px 20px;
-  border-radius: 6px;
-  margin-bottom: 15px;
-  box-shadow: var(--shadow-tiny);
+    background-color: var(--bg-color); /* Uses --bg-color from index.css */
+    padding: 15px 20px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    box-shadow: var(--shadow-tiny); /* Now defined in index.css */
 }
 
 .reply-card:last-child {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .reply-content {
-  font-size: 1rem;
-  line-height: 1.5;
-  color: var(--text-color);
-  margin-bottom: 10px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--text-color);
+    margin-bottom: 10px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 .reply-meta {
-  font-size: 0.85rem;
-  color: var(--text-color-muted);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  border-top: 1px dashed var(--border-color-light);
-  padding-top: 8px;
-  margin-top: 8px;
+    font-size: 0.85rem;
+    color: var(--text-color-muted); /* Now defined in index.css */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-top: 1px dashed var(--border-color-light); /* Now defined in index.css */
+    padding-top: 8px;
+    margin-top: 8px;
 }
 
 .reply-form {
-  margin-top: 30px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border-color);
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color); /* Now defined in index.css */
 }
 
 .reply-form h4 {
-  color: var(--text-color);
-  margin-bottom: 15px;
+    color: var(--text-color);
+    margin-bottom: 15px;
 }
 
 .reply-form textarea {
-  width: 100%;
-  padding: 12px 15px;
-  border: 1px solid var(--border-color);
-  border-radius: 5px;
-  background-color: var(--input-bg-color);
-  color: var(--text-color);
-  font-size: 1rem;
-  box-sizing: border-box;
-  resize: vertical;
-  min-height: 80px;
-  margin-bottom: 15px;
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color); /* Now defined in index.css */
+    border-radius: 5px;
+    background-color: var(--input-bg-color); /* Now defined in index.css */
+    color: var(--text-color);
+    font-size: 1rem;
+    box-sizing: border-box;
+    resize: vertical;
+    min-height: 80px;
+    margin-bottom: 15px;
 }
 
 .reply-form textarea:focus {
-  outline: none;
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.2);
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.2); /* Now defined in index.css */
 }
 
 .post-reply-btn {
-  padding: 10px 20px;
-  background-color: var(--primary-button-bg);
-  color: var(--primary-button-text);
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+    padding: 10px 20px;
+    background-color: var(--primary-button-bg); /* Now defined in index.css */
+    color: var(--primary-button-text); /* Now defined in index.css */
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .post-reply-btn:hover {
-  background-color: var(--primary-button-hover-bg);
-  transform: translateY(-2px);
+    background-color: var(--primary-button-hover-bg); /* Now defined in index.css */
+    transform: translateY(-2px);
 }
 
 .post-reply-btn:active {
-  transform: translateY(0);
+    transform: translateY(0);
 }
 
 .no-replies-msg,
@@ -405,12 +404,12 @@
 .no-data-message {
     text-align: center;
     font-style: italic;
-    color: var(--text-color-muted);
+    color: var(--text-color-muted); /* Now defined in index.css */
     padding: 20px;
 }
 
 .login-to-reply-msg a {
-    color: var(--link-color);
+    color: var(--link-color); /* Now defined in index.css */
     font-weight: bold;
     text-decoration: none;
 }

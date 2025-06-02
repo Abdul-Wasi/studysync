@@ -2,15 +2,15 @@
 
 import React, { useState, useEffect } from 'react';
 import { db, auth } from '../firebase'; // Import 'db' for Realtime Database and 'auth' for user info
-import { ref, push, serverTimestamp, set } from 'firebase/database'; // Import Realtime DB functions
+import { ref, push, serverTimestamp, set, get } from 'firebase/database'; // <--- ADD 'get' here
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import '../styles/DiscussionForum.css'; // Reuse existing styles for consistency
 
 const NewDiscussionForm = () => {
   const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('General'); // Default category
+  const [description, setDescription] = useState(''); // Keep description state
+  const [category, setCategory] = useState('General'); // Keep category state
   const [user, setUser] = useState(null); // To store authenticated user info
   const [loading, setLoading] = useState(true); // To manage initial user check loading
 
@@ -47,16 +47,27 @@ const NewDiscussionForm = () => {
     }
 
     try {
+      // Fetch the user's display name from the Realtime Database
+      let authorName = user.email; // Fallback to email
+      const userRef = ref(db, `users/${user.uid}`);
+      const snapshot = await get(userRef); // Use 'get' to fetch data once
+      if (snapshot.exists()) {
+        const userData = snapshot.val();
+        if (userData.displayName) {
+          authorName = userData.displayName; // Use display name if available
+        }
+      }
+
       const newDiscussionRef = push(ref(db, 'discussions')); // Get a new unique key
       const discussionId = newDiscussionRef.key; // Get the unique ID for the new discussion
 
       const newDiscussion = {
         id: discussionId, // Store the ID within the object for easy retrieval
         title: title.trim(),
-        description: description.trim(),
-        category: category,
+        description: description.trim(), // Use description state
+        category: category, // Use category state
         authorId: user.uid,
-        authorName: user.email, // Or user.displayName if you collect it
+        authorName: authorName, // <--- Use the fetched display name or fallback email
         createdAt: serverTimestamp(), // Firebase server timestamp
         lastActivityAt: serverTimestamp(), // Initially same as createdAt
         replyCount: 0, // Initialize reply count
@@ -65,7 +76,12 @@ const NewDiscussionForm = () => {
       await set(newDiscussionRef, newDiscussion); // Save the new discussion to Realtime Database
 
       toast.success('Discussion topic created successfully!');
-      navigate(`/forum/${discussionId}`); // Redirect to the new discussion's detail page
+      // Navigate to the new discussion's detail page, or back to the list
+      navigate(`/forum/${discussionId}`);
+      // Optionally clear form fields after successful submission
+      setTitle('');
+      setDescription('');
+      setCategory('General');
     } catch (error) {
       console.error('Error creating discussion:', error);
       toast.error('Failed to create discussion. Please try again.');
