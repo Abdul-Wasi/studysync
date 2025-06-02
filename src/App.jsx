@@ -51,7 +51,7 @@ function App() {
       <div className="main-container">
         <Routes>
           {/* Core Pages */}
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<NewDiscussionForm />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/profile" element={<ProfilePage />} />

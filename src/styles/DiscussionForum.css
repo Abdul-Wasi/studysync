@@ -165,3 +165,79 @@
         gap: 0.5rem;
     }
 }
+
+/* src/styles/DiscussionForum.css (add these or adapt existing styles) */
+
+.new-discussion-form-card {
+  background-color: var(--card-bg-color); /* Use your theme variables */
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-small);
+  max-width: 600px;
+  margin: 30px auto; /* Center the form */
+}
+
+.new-discussion-form-card h2 {
+  text-align: center;
+  color: var(--text-color);
+  margin-bottom: 25px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: var(--text-color-secondary);
+}
+
+.form-group input[type="text"],
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: var(--input-bg-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  box-sizing: border-box; /* Include padding in width */
+}
+
+.form-group textarea {
+  resize: vertical; /* Allow vertical resizing */
+  min-height: 100px;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--accent-color); /* Highlight on focus */
+  box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.2);
+}
+
+.submit-discussion-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--primary-button-bg); /* Your primary button color */
+  color: var(--primary-button-text);
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.submit-discussion-btn:hover {
+  background-color: var(--primary-button-hover-bg); /* Darker shade on hover */
+  transform: translateY(-2px);
+}
+
+.submit-discussion-btn:active {
+  transform: translateY(0);
+}
