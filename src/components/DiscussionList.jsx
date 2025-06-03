@@ -1,7 +1,7 @@
 // src/components/DiscussionList.jsx
 
 import React, { useState, useEffect } from 'react';
-import { db } from '../firebase'; // <--- CORRECTED: Import 'db' which is your Realtime Database instance
+import { db } from '../firebase';
 import { ref, onValue, off } from 'firebase/database';
 import { Link } from 'react-router-dom';
 import '../styles/DiscussionForum.css';
@@ -12,26 +12,21 @@ const DiscussionList = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Reference to the 'discussions' node in your Realtime Database
-    const discussionsRef = ref(db, 'discussions'); // <--- Use 'db' here
+    const discussionsRef = ref(db, 'discussions');
 
-    // Attach a listener to get real-time updates
     const unsubscribe = onValue(discussionsRef, (snapshot) => {
       const discussionsData = [];
       if (snapshot.exists()) {
         const data = snapshot.val();
-        // Realtime Database returns data as an object of objects,
-        // so we need to convert it to an array and sort it.
         const discussionKeys = Object.keys(data);
         const sortedKeys = discussionKeys.sort((a, b) => {
-            const dateA = data[a].lastActivityAt || data[a].createdAt;
-            const dateB = data[b].lastActivityAt || data[b].createdAt;
-            // Assuming lastActivityAt/createdAt are stored as Firebase server timestamps or ISO strings
-            return new Date(dateB) - new Date(dateA); // Sort by most recent activity
+          const dateA = data[a].lastActivityAt || data[a].createdAt;
+          const dateB = data[b].lastActivityAt || data[b].createdAt;
+          return new Date(dateB) - new Date(dateA);
         });
 
         sortedKeys.forEach(key => {
-            discussionsData.push({ id: key, ...data[key] });
+          discussionsData.push({ id: key, ...data[key] });
         });
       }
       setDiscussions(discussionsData);
@@ -42,7 +37,6 @@ const DiscussionList = () => {
       setLoading(false);
     });
 
-    // Cleanup subscription on unmount
     return () => off(discussionsRef, 'value', unsubscribe);
   }, []);
 
@@ -73,12 +67,20 @@ const DiscussionList = () => {
                 <h3>{discussion.title}</h3>
                 <span className="discussion-category">{discussion.category || 'General'}</span>
               </div>
-              <p className="discussion-snippet">{discussion.description ? discussion.description.substring(0, 100) + '...' : 'No description'}</p>
+              {/* This is the key change: render HTML snippet with dangerouslySetInnerHTML */}
+              <div
+                className="discussion-snippet quill-content" // Add quill-content class for styling
+                dangerouslySetInnerHTML={{
+                  __html: discussion.description
+                    ? discussion.description.substring(0, 150) + '...' // Take a longer snippet if needed
+                    : 'No description'
+                }}
+              />
               <div className="discussion-meta">
                 <span>By: {discussion.authorName || 'Anonymous'}</span>
                 <span>
                   {discussion.lastActivityAt ?
-                    new Date(discussion.lastActivityAt).toLocaleString() : // Assuming stored as ISO string or timestamp number
+                    new Date(discussion.lastActivityAt).toLocaleString() :
                     (discussion.createdAt ? new Date(discussion.createdAt).toLocaleString() : 'N/A')
                   }
                 </span>

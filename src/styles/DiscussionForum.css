@@ -1,6 +1,6 @@
 /* src/styles/DiscussionForum.css */
-/* This file remains as you provided it, as the variable definitions are now in index.css */
 
+/* Main forum container and general styles */
 .forum-container {
     max-width: 900px;
     margin: 2rem auto;
@@ -43,6 +43,10 @@
 .new-discussion-btn:hover {
     background-color: color-mix(in srgb, var(--accent-color) 80%, black 20%); /* Slightly darker */
     transform: translateY(-2px);
+}
+
+.new-discussion-btn:active {
+    transform: translateY(0);
 }
 
 .discussion-list {
@@ -169,10 +173,10 @@
 
 /* New Discussion Form Styles */
 .new-discussion-form-card {
-    background-color: var(--card-bg-color); /* Now defined in index.css */
+    background-color: var(--card-bg-color);
     padding: 30px;
     border-radius: 8px;
-    box-shadow: var(--shadow-small); /* Now defined in index.css */
+    box-shadow: var(--shadow-small);
     max-width: 600px;
     margin: 30px auto;
 }
@@ -191,40 +195,33 @@
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
-    color: var(--text-color-secondary); /* Now defined in index.css */
+    color: var(--text-color-secondary);
 }
 
 .form-group input[type="text"],
-.form-group textarea,
 .form-group select {
     width: 100%;
     padding: 12px 15px;
-    border: 1px solid var(--border-color); /* Now defined in index.css */
+    border: 1px solid var(--border-color);
     border-radius: 5px;
-    background-color: var(--input-bg-color); /* Now defined in index.css */
+    background-color: var(--input-bg-color);
     color: var(--text-color);
     font-size: 1rem;
     box-sizing: border-box;
 }
 
-.form-group textarea {
-    resize: vertical;
-    min-height: 100px;
-}
-
 .form-group input[type="text"]:focus,
-.form-group textarea:focus,
 .form-group select:focus {
     outline: none;
     border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.2); /* Now defined in index.css */
+    box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.2);
 }
 
 .submit-discussion-btn {
     width: 100%;
     padding: 12px;
-    background-color: var(--primary-button-bg); /* Now defined in index.css */
-    color: var(--primary-button-text); /* Now defined in index.css */
+    background-color: var(--primary-button-bg);
+    color: var(--primary-button-text);
     border: none;
     border-radius: 5px;
     font-size: 1.1rem;
@@ -234,7 +231,7 @@
 }
 
 .submit-discussion-btn:hover {
-    background-color: var(--primary-button-hover-bg); /* Now defined in index.css */
+    background-color: var(--primary-button-hover-bg);
     transform: translateY(-2px);
 }
 
@@ -244,10 +241,10 @@
 
 /* Discussion Detail Page Styles */
 .discussion-detail-card {
-    background-color: var(--card-bg-color); /* Now defined in index.css */
+    background-color: var(--card-bg-color);
     padding: 30px;
     border-radius: 8px;
-    box-shadow: var(--shadow-medium); /* Now defined in index.css */
+    box-shadow: var(--shadow-medium);
     margin-bottom: 25px;
     color: var(--text-color);
 }
@@ -279,35 +276,26 @@
     white-space: nowrap;
 }
 
-.discussion-detail-description {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: var(--text-color-secondary); /* Now defined in index.css */
-    margin-bottom: 20px;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-}
-
 .discussion-detail-meta {
     font-size: 0.9rem;
-    color: var(--text-color-muted); /* Now defined in index.css */
+    color: var(--text-color-muted);
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
 }
 
 .replies-section {
-    background-color: var(--card-bg-color); /* Now defined in index.css */
+    background-color: var(--card-bg-color);
     padding: 25px;
     border-radius: 8px;
-    box-shadow: var(--shadow-small); /* Now defined in index.css */
+    box-shadow: var(--shadow-small);
     color: var(--text-color);
 }
 
 .replies-section h3 {
     color: var(--primary-color);
     margin-bottom: 20px;
-    border-bottom: 1px solid var(--border-color); /* Now defined in index.css */
+    border-bottom: 1px solid var(--border-color);
     padding-bottom: 10px;
 }
 
@@ -316,33 +304,24 @@
 }
 
 .reply-card {
-    background-color: var(--bg-color); /* Uses --bg-color from index.css */
+    background-color: var(--bg-color);
     padding: 15px 20px;
     border-radius: 6px;
     margin-bottom: 15px;
-    box-shadow: var(--shadow-tiny); /* Now defined in index.css */
+    box-shadow: var(--shadow-tiny);
 }
 
 .reply-card:last-child {
     margin-bottom: 0;
 }
 
-.reply-content {
-    font-size: 1rem;
-    line-height: 1.5;
-    color: var(--text-color);
-    margin-bottom: 10px;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-}
-
 .reply-meta {
     font-size: 0.85rem;
-    color: var(--text-color-muted); /* Now defined in index.css */
+    color: var(--text-color-muted);
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    border-top: 1px dashed var(--border-color-light); /* Now defined in index.css */
+    border-top: 1px dashed var(--border-color-light);
     padding-top: 8px;
     margin-top: 8px;
 }
@@ -350,7 +329,8 @@
 .reply-form {
     margin-top: 30px;
     padding-top: 20px;
-    border-top: 1px solid var(--border-color); /* Now defined in index.css */
+    padding-bottom: 10px;
+    border-top: 1px solid var(--border-color);
 }
 
 .reply-form h4 {
@@ -358,40 +338,21 @@
     margin-bottom: 15px;
 }
 
-.reply-form textarea {
-    width: 100%;
-    padding: 12px 15px;
-    border: 1px solid var(--border-color); /* Now defined in index.css */
-    border-radius: 5px;
-    background-color: var(--input-bg-color); /* Now defined in index.css */
-    color: var(--text-color);
-    font-size: 1rem;
-    box-sizing: border-box;
-    resize: vertical;
-    min-height: 80px;
-    margin-bottom: 15px;
-}
-
-.reply-form textarea:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.2); /* Now defined in index.css */
-}
-
 .post-reply-btn {
     padding: 10px 20px;
-    background-color: var(--primary-button-bg); /* Now defined in index.css */
-    color: var(--primary-button-text); /* Now defined in index.css */
+    background-color: var(--primary-button-bg);
+    color: var(--primary-button-text);
     border: none;
     border-radius: 5px;
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 15px;
 }
 
 .post-reply-btn:hover {
-    background-color: var(--primary-button-hover-bg); /* Now defined in index.css */
+    background-color: var(--primary-button-hover-bg);
     transform: translateY(-2px);
 }
 
@@ -404,16 +365,263 @@
 .no-data-message {
     text-align: center;
     font-style: italic;
-    color: var(--text-color-muted); /* Now defined in index.css */
+    color: var(--text-color-muted);
     padding: 20px;
 }
 
 .login-to-reply-msg a {
-    color: var(--link-color); /* Now defined in index.css */
+    color: var(--link-color);
     font-weight: bold;
     text-decoration: none;
 }
 
 .login-to-reply-msg a:hover {
     text-decoration: underline;
+}
+
+/* Quill Editor Specific Styles (within forms) */
+.form-group .quill {
+    height: 200px;
+    margin-bottom: 2.5rem;
+}
+
+.reply-form .quill {
+    height: 120px;
+    margin-bottom: 3.5rem;
+}
+
+/* Base Quill editor colors to match theme */
+.ql-toolbar.ql-snow {
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.ql-toolbar.ql-snow .ql-stroke {
+    stroke: var(--text-color);
+}
+
+.ql-toolbar.ql-snow .ql-fill {
+    fill: var(--text-color);
+}
+
+.ql-container.ql-snow {
+    border: 1px solid var(--border-color);
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    background-color: var(--input-bg-color);
+    color: var(--text-color);
+}
+
+.ql-editor {
+    min-height: 100px;
+    color: var(--text-color);
+}
+
+.ql-editor.ql-blank::before {
+    color: var(--text-color-muted) !important;
+}
+
+/* Hover/Active states for toolbar buttons to match theme */
+.ql-toolbar.ql-snow .ql-picker-label:hover,
+.ql-toolbar.ql-snow .ql-picker-label.ql-active,
+.ql-toolbar.ql-snow .ql-picker-item:hover,
+.ql-toolbar.ql-snow .ql-picker-item.ql-selected,
+.ql-toolbar.ql-snow .ql-formats button:hover,
+.ql-toolbar.ql-snow .ql-formats button.ql-active,
+.ql-toolbar.ql-snow .ql-formats .ql-stroke.ql-active,
+.ql-toolbar.ql-snow .ql-formats .ql-fill.ql-active {
+    color: var(--accent-color);
+    stroke: var(--accent-color);
+    fill: var(--accent-color);
+}
+
+.ql-toolbar.ql-snow .ql-picker-label.ql-active .ql-stroke {
+    stroke: var(--accent-color);
+}
+
+.ql-toolbar.ql-snow .ql-picker-label.ql-active .ql-fill {
+    fill: var(--accent-color);
+}
+
+/* Styles for Rendered HTML Content from Quill */
+.discussion-detail-description,
+.reply-content,
+.quill-content {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-color-secondary);
+    margin-bottom: 20px;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.quill-content h1,
+.quill-content h2,
+.quill-content h3,
+.quill-content h4,
+.quill-content h5,
+.quill-content h6 {
+    color: var(--primary-color);
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+    line-height: 1.2;
+    font-family: var(--font-heading);
+}
+
+.quill-content h1 { font-size: 1.8em; }
+.quill-content h2 { font-size: 1.5em; border-bottom: 1px solid var(--border-color-light); padding-bottom: 0.3em; }
+.quill-content h3 { font-size: 1.3em; }
+.quill-content h4 { font-size: 1.1em; }
+
+.quill-content p {
+    margin-bottom: 1em;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.quill-content a {
+    color: var(--link-color);
+    text-decoration: underline;
+}
+
+.quill-content ul,
+.quill-content ol {
+    margin-left: 1.5em;
+    margin-bottom: 1em;
+    color: var(--text-color);
+}
+
+.quill-content ul li,
+.quill-content ol li {
+    margin-bottom: 0.5em;
+    line-height: 1.5;
+}
+
+.quill-content strong { font-weight: bold; }
+.quill-content em { font-style: italic; }
+.quill-content del { text-decoration: line-through; }
+
+.quill-content blockquote {
+    border-left: 4px solid var(--accent-color);
+    padding: 0.5em 1em;
+    margin: 1em 0;
+    background-color: var(--bg-color);
+    color: var(--text-color-secondary);
+    font-style: italic;
+    border-radius: var(--border-radius);
+}
+
+/* Code blocks (preformatted text from Quill) */
+.quill-content pre.ql-syntax {
+    background-color: var(--dark-bg);
+    color: #e0e0e0;
+    padding: 1em;
+    border-radius: var(--border-radius);
+    overflow-x: auto;
+    margin: 1em 0;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+/* Inline code (code not inside a pre tag) */
+.quill-content code:not(pre .ql-syntax) {
+    font-family: monospace;
+    background-color: rgba(var(--primary-color-rgb), 0.1);
+    color: var(--primary-color);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+}
+
+.quill-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+}
+
+.quill-content th,
+.quill-content td {
+    border: 1px solid var(--border-color-light);
+    padding: 0.8em;
+    text-align: left;
+    color: var(--text-color);
+}
+
+.quill-content th {
+    background-color: var(--hover-bg);
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+/* For images in quill content */
+.quill-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1em auto;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-small);
+}
+
+/* --- STYLES FOR MAIN DISCUSSION DETAIL PAGE TRUNCATION --- */
+
+.discussion-detail-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-color-secondary);
+    margin-bottom: 20px;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.truncated-content {
+    max-height: 300px; /* THIS VALUE MUST MATCH TRUNCATION_HEIGHT_LIMIT in JS */
+    overflow: hidden;
+    position: relative;
+    transition: max-height 0.3s ease-out;
+    margin-bottom: 0;
+}
+
+.truncated-content::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(to top, var(--card-bg-color) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+.read-more-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+    padding: 8px 15px;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    text-decoration: none;
+}
+
+.read-more-btn:hover {
+    background-color: color-mix(in srgb, var(--secondary-color) 80%, black 10%);
+    transform: translateY(-1px);
+}
+
+.read-more-btn:active {
+    transform: translateY(0);
+}
+
+.reply-form-quill {
+    height: 120px;
+    margin-bottom: 3.5rem;
 }
