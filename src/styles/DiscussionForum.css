@@ -625,3 +625,90 @@
     height: 120px;
     margin-bottom: 3.5rem;
 }
+
+/* Add to your DiscussionForum.css */
+
+/* Like Button Styling */
+.like-btn {
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0 5px;
+    margin-left: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    transition: color 0.2s ease-in-out;
+}
+
+.like-btn:hover {
+    color: #e04e4e; /* A slightly darker red on hover */
+}
+
+.like-btn.liked {
+    color: #e04e4e; /* Red when liked */
+    font-weight: bold;
+}
+
+/* Reply Button Styling */
+.reply-btn {
+    background-color: #f0f2f5; /* Light grey background */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 4px 10px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.reply-btn:hover {
+    background-color: #e6e8eb;
+}
+
+/* Nested Reply Form */
+.nested-reply-form {
+    margin-top: 15px;
+    margin-left: 20px; /* Indent the nested form */
+    border-left: 2px solid #eee;
+    padding-left: 15px;
+    padding-top: 10px;
+}
+
+.nested-reply-form .reply-form-quill {
+    margin-bottom: 10px;
+}
+
+.post-nested-reply-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+}
+
+.post-nested-reply-btn:hover {
+    background-color: #0056b3;
+}
+
+
+/* Styling for nested comments (visual indentation) */
+.nested-replies-list {
+    margin-top: 15px;
+    margin-left: 20px; /* Indent nested replies */
+    border-left: 2px solid #eee; /* Visual separator for nesting */
+    padding-left: 15px;
+}
+
+.nested-replies-list > .reply-card {
+    background-color: #fcfcfc; /* Slightly different background for nested comments */
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #e9e9e9;
+}

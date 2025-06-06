@@ -1,7 +1,9 @@
+// src/components/DiscussionDetail.jsx
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { db, auth } from '../firebase';
-import { set, ref, onValue, off, push, serverTimestamp, update, get } from 'firebase/database';
+import { set, ref, onValue, off, push, serverTimestamp, update, get, runTransaction } from 'firebase/database'; // Import runTransaction
 import { toast } from 'react-toastify';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -48,6 +50,7 @@ const Comment = ({ comment, discussionId, currentUser, onLikeToggle, onReply }) 
             toast.error('Reply content cannot be empty.');
             return;
         }
+        // Pass the parent comment ID and the content to the handler
         await onReply(comment.id, nestedReplyContent);
         setNestedReplyContent('');
         setShowReplyForm(false);
@@ -58,11 +61,13 @@ const Comment = ({ comment, discussionId, currentUser, onLikeToggle, onReply }) 
             <div className="reply-content quill-content" dangerouslySetInnerHTML={renderRichText(comment.content)}></div>
             <div className="reply-meta">
                 <span>By: **{comment.authorName || 'Anonymous'}**</span>
-                <span>On: {comment.createdAt && new Date(comment.createdAt?.val || comment.createdAt).toLocaleString()}</span>
+                {/* Ensure createdAt is treated as a number for Date object */}
+                <span>On: {comment.createdAt && new Date(comment.createdAt).toLocaleString()}</span>
                 {currentUser && (
                     <button
                         className={`like-btn ${hasLiked ? 'liked' : ''}`}
-                        onClick={() => onLikeToggle(comment.id, hasLiked, 'reply')}
+                        onClick={() => onLikeToggle(comment.id, hasLiked, 'comment')}
+                        // The comment below was causing the syntax error. Removed it from inside the prop.
                     >
                         ❤️ {comment.likesCount || 0}
                     </button>
@@ -182,9 +187,10 @@ const DiscussionDetail = () => {
                         commentsData.push({ id: key, ...data[key] });
                     });
                     commentsData.sort((a, b) => {
-                        const dateA = a.createdAt?.val ? a.createdAt.val : a.createdAt;
-                        const dateB = b.createdAt?.val ? b.createdAt.val : b.createdAt;
-                        return new Date(dateA) - new Date(dateB);
+                        // Ensure createdAt is treated as a number for comparison
+                        const dateA = a.createdAt;
+                        const dateB = b.createdAt;
+                        return (new Date(dateA).getTime() || 0) - (new Date(dateB).getTime() || 0);
                     });
                 }
                 // Build the hierarchical structure of comments
@@ -247,43 +253,51 @@ const DiscussionDetail = () => {
         }
 
         const userId = user.uid;
-        let itemRef;
-        let currentLikes;
+        let itemBaseRef; // Base reference to the discussion or comment
+        let likesPath; // Path to the 'likes' map within the item
+        let likesCountRef; // Reference to the 'likesCount' field within the item
 
         if (itemType === 'discussion') {
-            itemRef = ref(db, `discussions/${discussionId}`);
-            currentLikes = discussion.likes || {};
-        } else if (itemType === 'reply') { // This also handles nested replies
-            itemRef = ref(db, `comments/${discussionId}/${itemId}`);
-            // To get current likes for a reply, we need to fetch it first
-            // This is less efficient than a single listener but simpler for now
-            const snapshot = await get(itemRef);
-            currentLikes = snapshot.exists() ? (snapshot.val().likes || {}) : {};
+            itemBaseRef = ref(db, `discussions/${discussionId}`);
+            likesPath = `discussions/${discussionId}/likes`;
+            likesCountRef = ref(db, `discussions/${discussionId}/likesCount`);
+        } else if (itemType === 'comment') {
+            itemBaseRef = ref(db, `comments/${discussionId}/${itemId}`);
+            likesPath = `comments/${discussionId}/${itemId}/likes`;
+            likesCountRef = ref(db, `comments/${discussionId}/${itemId}/likesCount`);
         } else {
             console.error('Invalid item type for like toggle:', itemType);
             return;
         }
 
-        const updates = {};
-        if (hasLiked) {
-            // User is unliking
-            updates[`likes/${userId}`] = null; // Remove the specific user's like
-            updates['likesCount'] = (currentLikes.likesCount || 0) - 1; // Decrement count
-        } else {
-            // User is liking
-            updates[`likes/${userId}`] = true; // Mark user as liked
-            updates['likesCount'] = (currentLikes.likesCount || 0) + 1; // Increment count
-        }
-
         try {
-            await update(itemRef, updates);
-            // Optimistic UI update could be done here as well, but onValue handles it
+            // Step 1: Update the user's like status in the 'likes' map
+            // We set to true if liking, or null if unliking (to remove the field)
+            await set(ref(db, `${likesPath}/${userId}`), hasLiked ? null : true);
+
+            // Step 2: Use a transaction to update the likesCount safely
+            await runTransaction(likesCountRef, (currentLikesCount) => {
+                // Ensure currentLikesCount is a number, default to 0 if null/undefined
+                const actualCurrentCount = typeof currentLikesCount === 'number' ? currentLikesCount : 0;
+
+                let newLikesCount;
+                if (hasLiked) {
+                    // User is unliking, so decrement
+                    newLikesCount = Math.max(0, actualCurrentCount - 1); // Ensure it doesn't go below 0
+                } else {
+                    // User is liking, so increment
+                    newLikesCount = actualCurrentCount + 1;
+                }
+                return newLikesCount;
+            });
+
             toast.success(hasLiked ? 'Unliked!' : 'Liked!');
         } catch (error) {
             console.error(`Error toggling like for ${itemType}:`, error);
             toast.error(`Failed to toggle like. Please try again.`);
         }
     };
+
 
     const handleSubmitReply = async (e, parentCommentId = null, replyContentParam = null) => {
         e?.preventDefault(); // e might be null if called from nested component
@@ -336,14 +350,16 @@ const DiscussionDetail = () => {
 
             await set(newCommentRef, newComment);
 
-            // Update discussion's reply count only for top-level replies to the discussion
-            // For nested replies, we don't update the main discussion's replyCount directly
+            // Update discussion's reply count and lastActivityAt only for top-level replies
             if (!parentCommentId) {
-                const discussionUpdates = {
-                    lastActivityAt: serverTimestamp(),
-                    replyCount: (discussion.replyCount || 0) + 1,
-                };
-                await update(ref(db, `discussions/${discussionId}`), discussionUpdates);
+                const discussionRef = ref(db, `discussions/${discussionId}`);
+                await runTransaction(discussionRef, (currentDiscussion) => {
+                    if (currentDiscussion) {
+                        currentDiscussion.lastActivityAt = serverTimestamp();
+                        currentDiscussion.replyCount = (currentDiscussion.replyCount || 0) + 1;
+                    }
+                    return currentDiscussion;
+                });
             }
 
             setReplyContent(''); // Clear main reply form
@@ -396,9 +412,9 @@ const DiscussionDetail = () => {
                 <div className="discussion-detail-meta">
                     <span>Posted by: **{discussion.authorName || 'Anonymous'}**</span>
                     <span>
-                        on: {discussion.createdAt && new Date(discussion.createdAt?.val || discussion.createdAt).toLocaleString()}
+                        on: {discussion.createdAt && new Date(discussion.createdAt).toLocaleString()}
                     </span>
-                    <span>Last Activity: {discussion.lastActivityAt && new Date(discussion.lastActivityAt?.val || discussion.lastActivityAt).toLocaleString()}</span>
+                    <span>Last Activity: {discussion.lastActivityAt && new Date(discussion.lastActivityAt).toLocaleString()}</span>
                     {user && (
                         <button
                             className={`like-btn ${hasDiscussionLiked ? 'liked' : ''}`}
