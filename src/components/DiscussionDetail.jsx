@@ -10,16 +10,110 @@ import DOMPurify from 'dompurify';
 import '../styles/DiscussionForum.css';
 
 // Define the truncation height limit.
-// This value MUST match the `max-height` set in your .truncated-content CSS class.
 const TRUNCATION_HEIGHT_LIMIT = 300;
+
+// Reusable Comment component to handle replies and nested replies
+const Comment = ({ comment, discussionId, currentUser, onLikeToggle, onReply }) => {
+    const [showReplyForm, setShowReplyForm] = useState(false);
+    const [nestedReplyContent, setNestedReplyContent] = useState('');
+
+    const hasLiked = currentUser && comment.likes && comment.likes[currentUser.uid];
+
+    const renderRichText = (htmlContent) => {
+        const cleanHtml = DOMPurify.sanitize(htmlContent, { USE_PROFILES: { html: true } });
+        return { __html: cleanHtml };
+    };
+
+    const modules = {
+        toolbar: [
+            [{ 'header': [1, 2, false] }],
+            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            [{ 'indent': '-1' }, { 'indent': '+1' }],
+            ['link', 'image'],
+            ['clean']
+        ],
+    };
+
+    const formats = [
+        'header', 'bold', 'italic', 'underline', 'strike', 'blockquote',
+        'list', 'bullet', 'indent', 'link', 'image'
+    ];
+
+    const handleNestedReplySubmit = async (e) => {
+        e.preventDefault();
+        const isReplyContentEmpty = !nestedReplyContent.trim() || nestedReplyContent === '<p><br></p>';
+
+        if (isReplyContentEmpty) {
+            toast.error('Reply content cannot be empty.');
+            return;
+        }
+        await onReply(comment.id, nestedReplyContent);
+        setNestedReplyContent('');
+        setShowReplyForm(false);
+    };
+
+    return (
+        <div className="reply-card">
+            <div className="reply-content quill-content" dangerouslySetInnerHTML={renderRichText(comment.content)}></div>
+            <div className="reply-meta">
+                <span>By: **{comment.authorName || 'Anonymous'}**</span>
+                <span>On: {comment.createdAt && new Date(comment.createdAt?.val || comment.createdAt).toLocaleString()}</span>
+                {currentUser && (
+                    <button
+                        className={`like-btn ${hasLiked ? 'liked' : ''}`}
+                        onClick={() => onLikeToggle(comment.id, hasLiked, 'reply')}
+                    >
+                        ❤️ {comment.likesCount || 0}
+                    </button>
+                )}
+                <button onClick={() => setShowReplyForm(!showReplyForm)} className="reply-btn">
+                    {showReplyForm ? 'Cancel Reply' : 'Reply'}
+                </button>
+            </div>
+
+            {showReplyForm && currentUser && (
+                <form onSubmit={handleNestedReplySubmit} className="nested-reply-form">
+                    <ReactQuill
+                        theme="snow"
+                        value={nestedReplyContent}
+                        onChange={setNestedReplyContent}
+                        modules={modules}
+                        formats={formats}
+                        placeholder="Write your reply to this comment..."
+                        className="reply-form-quill"
+                    />
+                    <button type="submit" className="post-nested-reply-btn">Post Reply</button>
+                </form>
+            )}
+
+            {/* Render nested replies if they exist */}
+            {comment.replies && comment.replies.length > 0 && (
+                <div className="nested-replies-list">
+                    {comment.replies.map(nestedReply => (
+                        <Comment
+                            key={nestedReply.id}
+                            comment={nestedReply}
+                            discussionId={discussionId}
+                            currentUser={currentUser}
+                            onLikeToggle={onLikeToggle}
+                            onReply={onReply}
+                        />
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+};
+
 
 const DiscussionDetail = () => {
     const { discussionId } = useParams();
     const navigate = useNavigate();
 
     const [discussion, setDiscussion] = useState(null);
-    const [replies, setReplies] = useState([]);
-    const [replyContent, setReplyContent] = useState('');
+    const [comments, setComments] = useState([]); // Renamed from replies to comments
+    const [replyContent, setReplyContent] = useState(''); // For top-level replies to discussion
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -59,10 +153,10 @@ const DiscussionDetail = () => {
         }
 
         const discussionRef = ref(db, `discussions/${discussionId}`);
-        const repliesRef = ref(db, `discussions/${discussionId}/replies`);
+        const commentsRef = ref(db, `comments/${discussionId}`); // Dedicated comments path
 
         let discussionUnsubscribe;
-        let repliesUnsubscribe;
+        let commentsUnsubscribe;
 
         try {
             discussionUnsubscribe = onValue(discussionRef, (snapshot) => {
@@ -80,22 +174,38 @@ const DiscussionDetail = () => {
                 setLoading(false);
             });
 
-            repliesUnsubscribe = onValue(repliesRef, (snapshot) => {
-                const repliesData = [];
+            commentsUnsubscribe = onValue(commentsRef, (snapshot) => {
+                const commentsData = [];
                 if (snapshot.exists()) {
                     const data = snapshot.val();
                     Object.keys(data).forEach(key => {
-                        repliesData.push({ id: key, ...data[key] });
+                        commentsData.push({ id: key, ...data[key] });
                     });
-                    repliesData.sort((a, b) => {
+                    commentsData.sort((a, b) => {
                         const dateA = a.createdAt?.val ? a.createdAt.val : a.createdAt;
                         const dateB = b.createdAt?.val ? b.createdAt.val : b.createdAt;
                         return new Date(dateA) - new Date(dateB);
                     });
                 }
-                setReplies(repliesData);
+                // Build the hierarchical structure of comments
+                const commentMap = {};
+                const rootComments = [];
+
+                commentsData.forEach(comment => {
+                    commentMap[comment.id] = { ...comment, replies: [] };
+                });
+
+                commentsData.forEach(comment => {
+                    if (comment.parentId && commentMap[comment.parentId]) {
+                        commentMap[comment.parentId].replies.push(commentMap[comment.id]);
+                    } else if (!comment.parentId) {
+                        rootComments.push(commentMap[comment.id]);
+                    }
+                });
+
+                setComments(rootComments); // Set the structured comments
             }, (err) => {
-                console.error("Error fetching replies:", err);
+                console.error("Error fetching comments:", err);
             });
 
         } catch (err) {
@@ -106,7 +216,7 @@ const DiscussionDetail = () => {
 
         return () => {
             if (discussionUnsubscribe) off(discussionRef, 'value', discussionUnsubscribe);
-            if (repliesUnsubscribe) off(repliesRef, 'value', repliesUnsubscribe);
+            if (commentsUnsubscribe) off(commentsRef, 'value', commentsUnsubscribe);
         };
     }, [discussionId]);
 
@@ -129,8 +239,56 @@ const DiscussionDetail = () => {
         setShowFullDescription(!showFullDescription);
     };
 
-    const handleSubmitReply = async (e) => {
-        e.preventDefault();
+    const handleLikeToggle = async (itemId, hasLiked, itemType) => {
+        if (!user) {
+            toast.error('You must be logged in to like.');
+            navigate('/login');
+            return;
+        }
+
+        const userId = user.uid;
+        let itemRef;
+        let currentLikes;
+
+        if (itemType === 'discussion') {
+            itemRef = ref(db, `discussions/${discussionId}`);
+            currentLikes = discussion.likes || {};
+        } else if (itemType === 'reply') { // This also handles nested replies
+            itemRef = ref(db, `comments/${discussionId}/${itemId}`);
+            // To get current likes for a reply, we need to fetch it first
+            // This is less efficient than a single listener but simpler for now
+            const snapshot = await get(itemRef);
+            currentLikes = snapshot.exists() ? (snapshot.val().likes || {}) : {};
+        } else {
+            console.error('Invalid item type for like toggle:', itemType);
+            return;
+        }
+
+        const updates = {};
+        if (hasLiked) {
+            // User is unliking
+            updates[`likes/${userId}`] = null; // Remove the specific user's like
+            updates['likesCount'] = (currentLikes.likesCount || 0) - 1; // Decrement count
+        } else {
+            // User is liking
+            updates[`likes/${userId}`] = true; // Mark user as liked
+            updates['likesCount'] = (currentLikes.likesCount || 0) + 1; // Increment count
+        }
+
+        try {
+            await update(itemRef, updates);
+            // Optimistic UI update could be done here as well, but onValue handles it
+            toast.success(hasLiked ? 'Unliked!' : 'Liked!');
+        } catch (error) {
+            console.error(`Error toggling like for ${itemType}:`, error);
+            toast.error(`Failed to toggle like. Please try again.`);
+        }
+    };
+
+    const handleSubmitReply = async (e, parentCommentId = null, replyContentParam = null) => {
+        e?.preventDefault(); // e might be null if called from nested component
+
+        const content = replyContentParam !== null ? replyContentParam : replyContent;
 
         if (!user) {
             toast.error('You must be logged in to reply.');
@@ -138,7 +296,7 @@ const DiscussionDetail = () => {
             return;
         }
 
-        const isReplyContentEmpty = !replyContent.trim() || replyContent === '<p><br></p>';
+        const isReplyContentEmpty = !content.trim() || content === '<p><br></p>';
 
         if (isReplyContentEmpty) {
             toast.error('Reply content cannot be empty.');
@@ -161,26 +319,34 @@ const DiscussionDetail = () => {
                 }
             }
 
-            const newReplyRef = push(ref(db, `discussions/${discussionId}/replies`));
-            const replyId = newReplyRef.key;
+            // Replies/Comments now go into a dedicated 'comments' collection under the discussion ID
+            const newCommentRef = push(ref(db, `comments/${discussionId}`));
+            const commentId = newCommentRef.key;
 
-            const newReply = {
-                id: replyId,
-                content: replyContent,
+            const newComment = {
+                id: commentId, // Store ID within the object for easier reference
+                content: content,
                 authorId: user.uid,
                 authorName: replyAuthorName,
                 createdAt: serverTimestamp(),
+                likes: {}, // Initialize likes object
+                likesCount: 0,
+                parentId: parentCommentId, // null for top-level comments, ID of parent for nested
             };
 
-            await set(newReplyRef, newReply);
+            await set(newCommentRef, newComment);
 
-            const discussionUpdates = {
-                lastActivityAt: serverTimestamp(),
-                replyCount: (discussion.replyCount || 0) + 1,
-            };
-            await update(ref(db, `discussions/${discussionId}`), discussionUpdates);
+            // Update discussion's reply count only for top-level replies to the discussion
+            // For nested replies, we don't update the main discussion's replyCount directly
+            if (!parentCommentId) {
+                const discussionUpdates = {
+                    lastActivityAt: serverTimestamp(),
+                    replyCount: (discussion.replyCount || 0) + 1,
+                };
+                await update(ref(db, `discussions/${discussionId}`), discussionUpdates);
+            }
 
-            setReplyContent('');
+            setReplyContent(''); // Clear main reply form
             toast.success('Reply posted successfully!');
         } catch (error) {
             console.error('Error posting reply:', error);
@@ -204,6 +370,8 @@ const DiscussionDetail = () => {
         const cleanHtml = DOMPurify.sanitize(htmlContent, { USE_PROFILES: { html: true } });
         return { __html: cleanHtml };
     };
+
+    const hasDiscussionLiked = user && discussion.likes && discussion.likes[user.uid];
 
     return (
         <div className="forum-container">
@@ -231,46 +399,55 @@ const DiscussionDetail = () => {
                         on: {discussion.createdAt && new Date(discussion.createdAt?.val || discussion.createdAt).toLocaleString()}
                     </span>
                     <span>Last Activity: {discussion.lastActivityAt && new Date(discussion.lastActivityAt?.val || discussion.lastActivityAt).toLocaleString()}</span>
+                    {user && (
+                        <button
+                            className={`like-btn ${hasDiscussionLiked ? 'liked' : ''}`}
+                            onClick={() => handleLikeToggle(discussionId, hasDiscussionLiked, 'discussion')}
+                        >
+                            ❤️ {discussion.likesCount || 0}
+                        </button>
+                    )}
                 </div>
             </div>
 
             <div className="replies-section">
-                <h3>Replies ({replies.length})</h3>
-                {replies.length === 0 ? (
-                    <p className="no-replies-msg">No replies yet. Be the first to respond!</p>
+                <h3>Comments ({comments.length})</h3>
+                {comments.length === 0 ? (
+                    <p className="no-replies-msg">No comments yet. Be the first to respond!</p>
                 ) : (
                     <div className="replies-list">
-                        {replies.map((reply) => (
-                            <div key={reply.id} className="reply-card">
-                                <div className="reply-content quill-content" dangerouslySetInnerHTML={renderRichText(reply.content)}></div>
-                                <div className="reply-meta">
-                                    <span>By: **{reply.authorName || 'Anonymous'}**</span>
-                                    <span>On: {reply.createdAt && new Date(reply.createdAt?.val || reply.createdAt).toLocaleString()}</span>
-                                </div>
-                            </div>
+                        {comments.map((comment) => (
+                            <Comment
+                                key={comment.id}
+                                comment={comment}
+                                discussionId={discussionId}
+                                currentUser={user}
+                                onLikeToggle={handleLikeToggle}
+                                onReply={(parentId, content) => handleSubmitReply(null, parentId, content)} // Pass the ID and content
+                            />
                         ))}
                     </div>
                 )}
 
                 {user ? (
                     <form onSubmit={handleSubmitReply} className="reply-form">
-                        <h4>Post a Reply:</h4>
+                        <h4>Post a Comment:</h4>
                         <ReactQuill
                             theme="snow"
                             value={replyContent}
                             onChange={setReplyContent}
                             modules={modules}
                             formats={formats}
-                            placeholder="Write your reply here..."
+                            placeholder="Write your comment here..."
                             className="reply-form-quill"
                         />
                         <button type="submit" className="post-reply-btn">
-                            Post Reply
+                            Post Comment
                         </button>
                     </form>
                 ) : (
                     <p className="login-to-reply-msg">
-                        <Link to="/login">Log in</Link> to post a reply.
+                        <Link to="/login">Log in</Link> to post a comment.
                     </p>
                 )}
             </div>
