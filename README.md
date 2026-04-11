@@ -1,4 +1,4 @@
-# StudySync 📚
+# StudySync📚
 
 **An all-in-one academic utility platform built for real students, by a real student.**
 
