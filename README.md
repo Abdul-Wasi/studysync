@@ -14,7 +14,7 @@ StudySync is a full-stack academic companion app built to be used by **millions 
 
 ## Features
 
-### 🎯 Academic Tools
+### 🎯 Academic Tools:
 - **Attendance Calculator** — Input total and attended classes; get your current percentage, a visual progress bar, a pie chart, and exactly how many more classes you can skip (or need to attend) to hit your target.
 - **SGPA Calculator** — Supports university-specific grading scales (IUST B.Tech, Nursing, B.Arch, Ph.D) and a generic "Others" mode. Enter marks, grades, or grade points — the form auto-fills the rest. Save results per semester with custom names and track CGPA over time.
 - **Study Planner** — Create, edit, and complete tasks with due dates and times. Data persists to Firebase for logged-in users.
