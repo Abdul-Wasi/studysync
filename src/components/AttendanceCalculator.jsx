@@ -146,4 +146,6 @@ const AttendanceCalculator = () => {
   );
 };
 
+//exporting the component
+
 export default AttendanceCalculator;
