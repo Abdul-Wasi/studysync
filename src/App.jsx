@@ -1,4 +1,4 @@
-// src/App.jsx.
+// src/App.jsx
 
 import React from 'react'; // React import (often implicit in newer React versions, but good practice)
 import { Routes, Route } from "react-router-dom";
