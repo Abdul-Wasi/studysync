@@ -35,7 +35,7 @@ import DiscussionDetail from "./components/DiscussionDetail";
 // Firebase Import
 import { auth } from "./firebase"; // Keep Firebase import separate or with other utilities
 
-// Global Styles
+// Global Styles.
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css"; // External CSS frameworks
 import "react-toastify/dist/ReactToastify.css"; // React Toastify CSS
