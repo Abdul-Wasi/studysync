@@ -6,7 +6,7 @@
 
 ---
 
-## What is StudySync?
+## What is StudySync ?
 
 StudySync is a full-stack academic companion app built to be used by **millions of students** across colleges and universities. It combines  the tools students actually need — attendance tracking, SGPA calculation, study planning, budget management, and peer discussion — into one clean, persistent platform. No more juggling five different apps or losing your data every session.
 
