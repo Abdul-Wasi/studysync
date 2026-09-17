@@ -1,4 +1,4 @@
-// src/components/ComingSoon.jsx
+// src/components/ComingSoon.jsx..
 import React from 'react';
 import '../styles/ComingSoon.css';
 
