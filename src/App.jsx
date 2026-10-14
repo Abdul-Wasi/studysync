@@ -15,7 +15,7 @@ import Tools from "./pages/Tools";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 
-// Specific Tool/Feature Componentss
+// Specific Tool/Feature Components
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import ProfilePage from "./components/ProfilePage";
